@@ -16,7 +16,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$imag
 function BookingCard(param) {
     let { bookingDate, submitDate, carProvider, carName, imgSrc, onDelete, onEdit } = param;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "bg-white rounded-[2.5rem] shadow-sm overflow-hidden border border-stone-100 flex flex-col md:flex-row font-serif group hover:shadow-2xl transition-all duration-700",
+        className: "bg-card-bg shadow-sm overflow-hidden border border-border flex flex-col md:flex-row group hover:shadow-md transition-all duration-300",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "relative w-full md:w-80 h-64 md:h-auto overflow-hidden",
@@ -24,7 +24,7 @@ function BookingCard(param) {
                     src: imgSrc,
                     alt: carName,
                     fill: true,
-                    className: "object-cover transition-transform duration-1000 group-hover:scale-110"
+                    className: "object-cover transition-transform duration-500 group-hover:scale-105"
                 }, void 0, false, {
                     fileName: "[project]/src/components/BookingCard.tsx",
                     lineNumber: 26,
@@ -47,7 +47,7 @@ function BookingCard(param) {
                                         className: "flex items-center gap-2 mb-3",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-[10px] uppercase tracking-[0.3em] text-stone-400 font-bold",
+                                                className: "text-[10px] uppercase tracking-[0.3em] text-muted font-bold",
                                                 children: "Provider:"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -55,7 +55,7 @@ function BookingCard(param) {
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-[11px] uppercase tracking-[0.3em] text-amber-600 font-bold italic",
+                                                className: "text-[11px] uppercase tracking-[0.3em] text-accent font-bold",
                                                 children: carProvider
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -69,7 +69,7 @@ function BookingCard(param) {
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                        className: "text-3xl md:text-5xl italic tracking-tight text-stone-900 leading-none",
+                                        className: "text-3xl md:text-5xl tracking-tight text-foreground leading-none font-bold",
                                         children: carName
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/BookingCard.tsx",
@@ -83,13 +83,13 @@ function BookingCard(param) {
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-y border-stone-50",
+                                className: "grid grid-cols-1 md:grid-cols-2 gap-8 py-8 border-y border-border",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "space-y-2",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "block text-[10px] uppercase tracking-[0.3em] text-stone-400 font-bold",
+                                                className: "block text-[10px] uppercase tracking-[0.3em] text-muted font-bold",
                                                 children: "Booking Date"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -97,7 +97,7 @@ function BookingCard(param) {
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-xl text-stone-800 italic",
+                                                className: "text-xl text-foreground",
                                                 children: bookingDate
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -114,7 +114,7 @@ function BookingCard(param) {
                                         className: "space-y-2",
                                         children: [
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "block text-[10px] uppercase tracking-[0.3em] text-stone-400 font-bold",
+                                                className: "block text-[10px] uppercase tracking-[0.3em] text-muted font-bold",
                                                 children: "submitdate"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -122,7 +122,7 @@ function BookingCard(param) {
                                                 columnNumber: 29
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                className: "text-xl text-stone-500 italic",
+                                                className: "text-xl text-muted",
                                                 children: submitDate
                                             }, void 0, false, {
                                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -152,7 +152,7 @@ function BookingCard(param) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: onEdit,
-                                className: "flex-1 min-w-[160px] bg-stone-900 text-white py-5 rounded-full text-[11px] font-bold uppercase tracking-[0.3em] hover:bg-amber-600 transition-all active:scale-95 flex justify-center items-center gap-3",
+                                className: "flex-1 min-w-40 bg-accent text-white py-3 text-[11px] font-semibold uppercase tracking-[0.3em] hover:opacity-90 transition-all active:scale-[0.99] flex justify-center items-center gap-3 cursor-pointer",
                                 children: "Edit"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -161,7 +161,7 @@ function BookingCard(param) {
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: onDelete,
-                                className: "px-10 border border-stone-200 text-stone-400 py-5 rounded-full text-[11px] font-bold uppercase tracking-[0.3em] hover:bg-red-50 hover:text-red-600 hover:border-red-100 transition-all active:scale-95 flex justify-center items-center gap-3",
+                                className: "px-8 border border-border text-muted py-3 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-red-50 hover:text-red-700 hover:border-red-100 transition-all active:scale-[0.99] flex justify-center items-center gap-3 cursor-pointer",
                                 children: "Remove"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/BookingCard.tsx",
@@ -216,15 +216,15 @@ function EditBookingModal(param) {
     const [isComplete, setIsComplete] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(initialData.isComplete);
     if (!isOpen) return null;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "fixed inset-0 z-[150] flex items-center justify-center p-6 bg-black/80 backdrop-blur-sm font-serif",
+        className: "fixed inset-0 z-150 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-white max-w-lg w-full rounded-[3rem] overflow-hidden shadow-2xl animate-in zoom-in duration-300",
+            className: "bg-card-bg max-w-lg w-full overflow-hidden shadow-lg border border-border",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "bg-stone-900 p-8 text-white",
+                    className: "bg-foreground p-8 text-white",
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                            className: "text-3xl italic tracking-tight",
+                            className: "text-3xl tracking-tight font-bold",
                             children: "Edit Booking"
                         }, void 0, false, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
@@ -232,7 +232,7 @@ function EditBookingModal(param) {
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                            className: "text-stone-500 text-[10px] uppercase tracking-[0.3em] mt-2 font-sans",
+                            className: "text-[#f0e6d7] text-[10px] uppercase tracking-[0.3em] mt-2",
                             children: "Update reservation details"
                         }, void 0, false, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
@@ -252,38 +252,38 @@ function EditBookingModal(param) {
                             className: "space-y-2",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-[10px] uppercase tracking-[0.2em] text-stone-500 font-bold ml-2",
+                                    className: "block text-[10px] uppercase tracking-[0.2em] text-muted font-bold ml-2",
                                     children: "Booking Date"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 33,
+                                    lineNumber: 32,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                     type: "date",
                                     value: bookingDate,
                                     onChange: (e)=>setBookingDate(e.target.value),
-                                    className: "w-full bg-white border border-stone-300 rounded-full px-8 py-4 outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all text-sm font-serif text-stone-900 font-bold"
+                                    className: "w-full bg-card-bg border border-border px-6 py-4 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-sm text-foreground font-semibold"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 34,
+                                    lineNumber: 33,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 32,
+                            lineNumber: 31,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "space-y-2",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                    className: "block text-[10px] uppercase tracking-[0.2em] text-stone-500 font-bold ml-2",
+                                    className: "block text-[10px] uppercase tracking-[0.2em] text-muted font-bold ml-2",
                                     children: "Provider Name"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 44,
+                                    lineNumber: 42,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -291,27 +291,27 @@ function EditBookingModal(param) {
                                     value: carProvider,
                                     onChange: (e)=>setCarProvider(e.target.value),
                                     placeholder: "Enter Provider Name",
-                                    className: "w-full bg-white border border-stone-300 rounded-full px-8 py-4 outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all text-sm font-serif text-stone-900 font-bold placeholder:text-stone-400"
+                                    className: "w-full bg-card-bg border border-border px-6 py-4 outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all text-sm text-foreground font-semibold placeholder:text-muted"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 45,
+                                    lineNumber: 43,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 43,
+                            lineNumber: 41,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center justify-between px-2",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    className: "text-[10px] uppercase tracking-[0.2em] text-stone-500 font-bold",
+                                    className: "text-[10px] uppercase tracking-[0.2em] text-muted font-bold",
                                     children: "Booking Status"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 56,
+                                    lineNumber: 53,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -324,34 +324,34 @@ function EditBookingModal(param) {
                                             className: "sr-only peer"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 58,
+                                            lineNumber: 55,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-stone-900"
+                                            className: "w-14 h-7 bg-[#d8cfc1] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:inset-s-0.5 after:bg-white after:border-border after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-accent"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 64,
+                                            lineNumber: 61,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "ml-3 text-[10px] uppercase tracking-widest text-stone-900 font-bold",
+                                            className: "ml-3 text-[10px] uppercase tracking-widest text-foreground font-bold",
                                             children: isComplete ? "Complete" : "Pending"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 65,
+                                            lineNumber: 62,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 54,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 55,
+                            lineNumber: 52,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -359,11 +359,11 @@ function EditBookingModal(param) {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     onClick: onClose,
-                                    className: "flex-1 border border-stone-300 text-stone-900 py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-stone-50 transition-all active:scale-95",
+                                    className: "flex-1 border border-border text-foreground py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:bg-[#f4efe8] transition-all active:scale-[0.99] cursor-pointer",
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 69,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -372,17 +372,17 @@ function EditBookingModal(param) {
                                             carProvider,
                                             isComplete
                                         }),
-                                    className: "flex-1 bg-stone-900 text-white py-4 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-amber-600 transition-all shadow-xl active:scale-95",
+                                    className: "flex-1 bg-accent text-white py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:opacity-90 transition-all shadow-sm active:scale-[0.99] cursor-pointer",
                                     children: "Save Changes"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 75,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 71,
+                            lineNumber: 68,
                             columnNumber: 21
                         }, this)
                     ]
@@ -440,7 +440,7 @@ function MyBookingsPage() {
             carProvider: "Elite Heritage Fleet",
             bookingDate: "2026-06-12",
             submitDate: "01 June 2026",
-            imgSrc: "/img/cars/Rolls-Royce_Ghost.jpg",
+            imgSrc: "/img/img3.jpg",
             isComplete: false
         },
         {
@@ -449,7 +449,7 @@ function MyBookingsPage() {
             carProvider: "Royal Velvet Motors",
             bookingDate: "2026-07-15",
             submitDate: "10 June 2026",
-            imgSrc: "/img/cars/Bentley_Bentayga.jpg",
+            imgSrc: "/img/img4.jpg",
             isComplete: true
         }
     ]);
@@ -468,28 +468,43 @@ function MyBookingsPage() {
         setMyBookings(myBookings.filter((b)=>b.id !== id));
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
-        className: "min-h-screen bg-[#faf9f6] font-serif",
+        className: "min-h-screen bg-background",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "bg-stone-900 pt-32 pb-24 px-8",
+                className: "bg-foreground pt-24 pb-20 px-6 md:px-8",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "max-w-6xl mx-auto flex justify-between items-end",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                                className: "text-5xl md:text-7xl text-white italic tracking-tighter mb-4 leading-none",
-                                children: "My Bookings"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-xs uppercase tracking-[0.3rem] text-[#f0e6d7] mb-2",
+                                children: "マイ ブッキング"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/mybooking/page.tsx",
                                 lineNumber: 52,
                                 columnNumber: 25
                             }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                                className: "text-4xl md:text-6xl text-white tracking-tight mb-4 leading-none font-bold",
+                                children: "My Bookings"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/mybooking/page.tsx",
+                                lineNumber: 53,
+                                columnNumber: 25
+                            }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                className: "text-stone-500 text-[10px] uppercase tracking-[0.5em]",
+                                className: "text-[#f0e6d7] text-[10px] uppercase tracking-[0.35em]",
                                 children: "Reservation Management System"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/mybooking/page.tsx",
-                                lineNumber: 55,
+                                lineNumber: 56,
+                                columnNumber: 25
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "w-10 h-0.5 bg-accent mt-4"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/mybooking/page.tsx",
+                                lineNumber: 59,
                                 columnNumber: 25
                             }, this)
                         ]
@@ -509,7 +524,7 @@ function MyBookingsPage() {
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "max-w-6xl mx-auto px-8 -mt-12 pb-40",
+                className: "max-w-6xl mx-auto px-6 md:px-8 -mt-10 pb-24",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "grid grid-cols-1 gap-12",
                     children: myBookings.length > 0 ? myBookings.map((booking)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -525,55 +540,55 @@ function MyBookingsPage() {
                                     onDelete: ()=>handleRemove(booking.id)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/mybooking/page.tsx",
-                                    lineNumber: 67,
+                                    lineNumber: 69,
                                     columnNumber: 33
                                 }, this),
                                 booking.isComplete && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "absolute top-6 right-6 bg-green-500 text-white text-[8px] uppercase tracking-[0.2em] font-bold px-4 py-1 rounded-full shadow-lg",
+                                    className: "absolute top-6 right-6 bg-accent text-white text-[8px] uppercase tracking-[0.2em] font-bold px-4 py-1 shadow-sm",
                                     children: "Completed"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/mybooking/page.tsx",
-                                    lineNumber: 77,
+                                    lineNumber: 79,
                                     columnNumber: 37
                                 }, this)
                             ]
                         }, booking.id, true, {
                             fileName: "[project]/src/app/mybooking/page.tsx",
-                            lineNumber: 66,
+                            lineNumber: 68,
                             columnNumber: 29
                         }, this)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "bg-white rounded-[3rem] p-32 text-center border border-stone-100 shadow-sm flex flex-col items-center",
+                        className: "bg-card-bg p-20 text-center border border-border shadow-sm flex flex-col items-center",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
-                                className: "text-4xl text-stone-300 italic mb-8",
+                                className: "text-4xl text-muted mb-8",
                                 children: "No Active Bookings"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/mybooking/page.tsx",
-                                lineNumber: 85,
+                                lineNumber: 87,
                                 columnNumber: 29
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                className: "bg-stone-900 text-white px-12 py-5 rounded-full text-[11px] uppercase tracking-[0.3em] hover:bg-amber-600 transition-all",
+                                className: "bg-accent text-white px-10 py-3 text-[11px] uppercase tracking-[0.3em] hover:opacity-90 transition-all cursor-pointer",
                                 children: "New Booking"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/mybooking/page.tsx",
-                                lineNumber: 86,
+                                lineNumber: 88,
                                 columnNumber: 29
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/mybooking/page.tsx",
-                        lineNumber: 84,
+                        lineNumber: 86,
                         columnNumber: 25
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/app/mybooking/page.tsx",
-                    lineNumber: 63,
+                    lineNumber: 65,
                     columnNumber: 17
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/mybooking/page.tsx",
-                lineNumber: 62,
+                lineNumber: 64,
                 columnNumber: 13
             }, this),
             selectedBooking && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$EditBookingModal$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -587,7 +602,7 @@ function MyBookingsPage() {
                 onSave: handleSaveEdit
             }, void 0, false, {
                 fileName: "[project]/src/app/mybooking/page.tsx",
-                lineNumber: 95,
+                lineNumber: 97,
                 columnNumber: 17
             }, this)
         ]
@@ -597,7 +612,7 @@ function MyBookingsPage() {
         columnNumber: 9
     }, this);
 }
-_s(MyBookingsPage, "OyW9ehBnnYhZAGcWIJWAazuz3Qk=");
+_s(MyBookingsPage, "lhEy4q1S74MjAFQX6QM3qoerH4I=");
 _c = MyBookingsPage;
 var _c;
 __turbopack_context__.k.register(_c, "MyBookingsPage");

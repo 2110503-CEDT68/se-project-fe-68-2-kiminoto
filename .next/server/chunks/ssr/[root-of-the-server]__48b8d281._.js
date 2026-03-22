@@ -58,11 +58,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$
 ;
 function Home() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
-        className: "w-full bg-[#faf9f6] min-h-screen",
+        className: "w-full bg-background min-h-screen",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Banner$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-            title: "Experience Luxury Cars",
-            subtitle: "Discover the perfect vehicle for your next journey. From luxury sedans to adventurous SUVs.",
-            imgSrc: "/img/black_cover.jpg"
+            title: "Car Rental Service",
+            subtitle: "Discover the perfect vehicle for your next journey.",
+            imgSrc: "/img/img1.jpg"
         }, void 0, false, {
             fileName: "[project]/src/app/page.tsx",
             lineNumber: 7,

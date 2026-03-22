@@ -1,7 +1,7 @@
 export default async function getVenue(id:string) {
-    const response = await fetch(`https://a08-venue-explorer-backend-3.vercel.app/api/v1/venues/${id}`)
+    const response = await fetch(`https://backend-paopaopao.vercel.app/api/v1/car-providers/${id}`)
     if(!response.ok) {
-        throw new Error("Failed to fetch venues")
+        throw new Error("Failed to fetch provider")
     }
     return await response.json()
 }

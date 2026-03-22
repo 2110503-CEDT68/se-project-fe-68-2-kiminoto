@@ -11,10 +11,55 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next-auth/react/index.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+;
+var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
+;
+;
 function SignInForm() {
+    _s();
+    const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"])();
+    const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"])();
+    const { status } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"])();
+    const [email, setEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [password, setPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const callbackUrl = searchParams.get("callbackUrl") || "/";
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "SignInForm.useEffect": ()=>{
+            if (status === "authenticated") {
+                router.replace(callbackUrl);
+            }
+        }
+    }["SignInForm.useEffect"], [
+        status,
+        router,
+        callbackUrl
+    ]);
+    const handleSubmit = async (event)=>{
+        event.preventDefault();
+        setError(null);
+        setIsLoading(true);
+        const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["signIn"])("credentials", {
+            email,
+            password,
+            redirect: false,
+            callbackUrl
+        });
+        if (result === null || result === void 0 ? void 0 : result.error) {
+            setError("Invalid credentials");
+            setIsLoading(false);
+            return;
+        }
+        router.replace((result === null || result === void 0 ? void 0 : result.url) || callbackUrl);
+        router.refresh();
+    };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("main", {
         className: "relative w-full h-screen flex items-center justify-center overflow-hidden font-serif",
         children: [
@@ -29,52 +74,53 @@ function SignInForm() {
                         className: "object-cover scale-105 blur-[2px]"
                     }, void 0, false, {
                         fileName: "[project]/src/components/SignInForm.tsx",
-                        lineNumber: 10,
+                        lineNumber: 51,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "absolute inset-0 bg-black/60 bg-gradient-to-b from-black/20 via-black/60 to-black/80"
+                        className: "absolute inset-0 bg-black/60 bg-linear-to-b from-black/20 via-black/60 to-black/80"
                     }, void 0, false, {
                         fileName: "[project]/src/components/SignInForm.tsx",
-                        lineNumber: 17,
+                        lineNumber: 58,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/SignInForm.tsx",
-                lineNumber: 9,
+                lineNumber: 50,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "relative z-10 w-full max-w-md p-12 mx-4 backdrop-blur-3xl bg-white/[0.03] border border-white/10 rounded-[3rem] shadow-2xl text-white",
+                className: "relative z-10 w-full max-w-md p-12 mx-4 backdrop-blur-3xl bg-white/3 border border-white/10 rounded-[3rem] shadow-2xl text-white",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-center mb-10",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                                 className: "text-4xl mb-4 tracking-tight font-serif italic",
-                                children: "Sign Up"
+                                children: "Sign In"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 23,
+                                lineNumber: 63,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 className: "text-stone-400 font-sans text-[10px] uppercase tracking-[0.3em] opacity-80",
-                                children: "Join our elite fleet"
+                                children: "Access your garage"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 24,
+                                lineNumber: 64,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/SignInForm.tsx",
-                        lineNumber: 22,
+                        lineNumber: 62,
                         columnNumber: 17
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                         className: "space-y-5 font-sans",
+                        onSubmit: handleSubmit,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "space-y-2",
@@ -84,23 +130,25 @@ function SignInForm() {
                                         children: "Email"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 29,
+                                        lineNumber: 69,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "email",
                                         placeholder: "email@example.com",
                                         className: "w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 outline-none focus:border-amber-500/40 focus:bg-white/10 transition-all text-sm placeholder:text-stone-700",
+                                        value: email,
+                                        onChange: (event)=>setEmail(event.target.value),
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 30,
+                                        lineNumber: 70,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 28,
+                                lineNumber: 68,
                                 columnNumber: 21
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -111,86 +159,78 @@ function SignInForm() {
                                         children: "Password"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 34,
+                                        lineNumber: 81,
                                         columnNumber: 25
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "password",
                                         placeholder: "••••••••",
                                         className: "w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 outline-none focus:border-amber-500/40 focus:bg-white/10 transition-all text-sm placeholder:text-stone-700",
+                                        value: password,
+                                        onChange: (event)=>setPassword(event.target.value),
                                         required: true
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 35,
+                                        lineNumber: 82,
                                         columnNumber: 25
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 33,
+                                lineNumber: 80,
                                 columnNumber: 21
                             }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "space-y-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
-                                        className: "block text-[10px] uppercase tracking-[0.3em] text-stone-500 ml-5 font-bold",
-                                        children: "Telephone"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 40,
-                                        columnNumber: 25
-                                    }, this),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                        type: "tel",
-                                        placeholder: "08x-xxx-xxxx",
-                                        className: "w-full bg-white/5 border border-white/10 rounded-full px-8 py-4 outline-none focus:border-amber-500/40 focus:bg-white/10 transition-all text-sm placeholder:text-stone-700"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/SignInForm.tsx",
-                                        lineNumber: 41,
-                                        columnNumber: 25
-                                    }, this)
-                                ]
-                            }, void 0, true, {
+                            error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                className: "text-red-300 text-sm px-4",
+                                children: error
+                            }, void 0, false, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 39,
-                                columnNumber: 21
+                                lineNumber: 92,
+                                columnNumber: 31
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "pt-4",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                     type: "submit",
-                                    className: "w-full bg-white text-black py-5 rounded-full font-bold uppercase text-[11px] tracking-[0.3em] hover:bg-amber-600 hover:text-white transition-all duration-500",
-                                    children: "Register Now"
+                                    disabled: isLoading,
+                                    className: "w-full bg-white text-black py-5 rounded-full font-bold uppercase text-[11px] tracking-[0.3em] hover:bg-amber-600 hover:text-white transition-all duration-500 disabled:opacity-60 disabled:cursor-not-allowed",
+                                    children: isLoading ? "Signing In..." : "Sign In"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/SignInForm.tsx",
-                                    lineNumber: 45,
+                                    lineNumber: 95,
                                     columnNumber: 25
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/SignInForm.tsx",
-                                lineNumber: 44,
+                                lineNumber: 94,
                                 columnNumber: 21
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/SignInForm.tsx",
-                        lineNumber: 27,
+                        lineNumber: 67,
                         columnNumber: 17
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/SignInForm.tsx",
-                lineNumber: 21,
+                lineNumber: 61,
                 columnNumber: 13
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/SignInForm.tsx",
-        lineNumber: 7,
+        lineNumber: 49,
         columnNumber: 9
     }, this);
 }
+_s(SignInForm, "xr7UlCzuw/CyEy39odRh6oz5N0A=", false, function() {
+    return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSearchParams"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$auth$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useSession"]
+    ];
+});
 _c = SignInForm;
 var _c;
 __turbopack_context__.k.register(_c, "SignInForm");

@@ -242,7 +242,7 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     children: "Booking Date"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 33,
+                                    lineNumber: 32,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -252,13 +252,13 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     className: "w-full bg-white border border-stone-300 rounded-full px-8 py-4 outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all text-sm font-serif text-stone-900 font-bold"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 34,
+                                    lineNumber: 33,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 32,
+                            lineNumber: 31,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -269,7 +269,7 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     children: "Provider Name"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 44,
+                                    lineNumber: 42,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -280,13 +280,13 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     className: "w-full bg-white border border-stone-300 rounded-full px-8 py-4 outline-none focus:border-stone-900 focus:ring-1 focus:ring-stone-900 transition-all text-sm font-serif text-stone-900 font-bold placeholder:text-stone-400"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 45,
+                                    lineNumber: 43,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 43,
+                            lineNumber: 41,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -297,7 +297,7 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     children: "Booking Status"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 56,
+                                    lineNumber: 53,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -310,14 +310,14 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                             className: "sr-only peer"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 58,
+                                            lineNumber: 55,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "w-14 h-7 bg-stone-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-stone-900"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 64,
+                                            lineNumber: 61,
                                             columnNumber: 29
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -325,19 +325,19 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                             children: isComplete ? "Complete" : "Pending"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                                            lineNumber: 65,
+                                            lineNumber: 62,
                                             columnNumber: 29
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 57,
+                                    lineNumber: 54,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 55,
+                            lineNumber: 52,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -349,7 +349,7 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     children: "Cancel"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 72,
+                                    lineNumber: 69,
                                     columnNumber: 25
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -362,13 +362,13 @@ function EditBookingModal({ isOpen, initialData, onClose, onSave }) {
                                     children: "Save Changes"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/EditBookingModal.tsx",
-                                    lineNumber: 78,
+                                    lineNumber: 75,
                                     columnNumber: 25
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/EditBookingModal.tsx",
-                            lineNumber: 71,
+                            lineNumber: 68,
                             columnNumber: 21
                         }, this)
                     ]
