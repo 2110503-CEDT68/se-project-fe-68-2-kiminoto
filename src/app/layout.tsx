@@ -4,7 +4,6 @@ import TopMenu from "@/components/TopMenu";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/libs/authOptions";
 import NextAuthProvider from "@/providers/NextAuthProvider";
-import ReduxProvider from "@/redux/ReduxProvider";
 
 export const metadata: Metadata = {
   title: "Car Rental Service",
@@ -22,10 +21,8 @@ export default async function RootLayout({
     <html lang="ja">
       <body suppressHydrationWarning>
         <NextAuthProvider session={session}>
-          <ReduxProvider>
             <TopMenu />
             {children}
-          </ReduxProvider>
         </NextAuthProvider>
       </body>
     </html>
