@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import { Checkbox, FormControlLabel, MenuItem, Select } from "@mui/material";
-import BookingCard from "@/components/BookingCard";
+import BookingFilterPanel from "@/components/BookingFilterPanel";
+import BookingList from "@/components/BookingList";
 import EditBookingModal from "@/components/EditBookingModal";
 import ReviewModal from "@/components/ReviewModal";
 import getBookings from "@/libs/getBookings";
@@ -12,7 +11,7 @@ import deleteBooking from "@/libs/deleteBooking";
 import createReview from "@/libs/createReview";
 import updateReview from "@/libs/updateReview";
 import deleteReview from "@/libs/deleteReview";
-import Image from "next/image";
+import MyBookingBanner from "@/components/MyBookingBanner";
 
 export default function MyBookingsPage() {
     const ITEMS_PER_PAGE = 5;
@@ -299,247 +298,37 @@ export default function MyBookingsPage() {
 
     return (
         <main className="min-h-screen bg-background">
-            <div className="relative pt-24 pb-20 px-6 md:px-8 overflow-hidden">
-                <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute -inset-3 blur-xs">
-                        <Image
-                            src="/img/img4.jpg"
-                            alt="My bookings banner"
-                            fill
-                            priority
-                            className="object-cover"
-                        />
-                    </div>
-                </div>
-                <div className="absolute inset-0 bg-foreground/75" />
-                <div className="max-w-6xl mx-auto flex justify-between items-end">
-                    <div className="relative z-10">
-                        <p className="text-xs uppercase tracking-[0.3rem] text-[#f0e6d7] mb-2">マイ ブッキング</p>
-                        <h1 className="text-4xl md:text-6xl text-white tracking-tight mb-4 leading-none font-bold">
-                            My Bookings
-                        </h1>
-                        <p className="text-[#f0e6d7] text-[10px] uppercase tracking-[0.35em]">
-                            Reservation Management System
-                        </p>
-                        <div className="w-10 h-0.5 bg-accent mt-4" />
-                    </div>
-                </div>
-            </div>
+            <MyBookingBanner/>
 
             <div className="max-w-6xl mx-auto px-6 md:px-8 -mt-10 pb-24">
                 <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 items-start">
-                    <aside className="z-20 relative bg-card-bg border border-border shadow-sm p-6 lg:sticky lg:top-24">
-                        <h2 className="text-[11px] uppercase tracking-[0.3em] text-muted font-bold mb-6">Filter Bookings</h2>
+                    <BookingFilterPanel
+                        statusFilter={statusFilter}
+                        setStatusFilter={setStatusFilter}
+                        idFilter={idFilter}
+                        setIdFilter={setIdFilter}
+                        selectedProviders={selectedProviders}
+                        setSelectedProviders={setSelectedProviders}
+                        providerOptions={providerOptions}
+                        toggleProvider={toggleProvider}
+                        sortOrder={sortOrder}
+                        setSortOrder={setSortOrder}
+                    />
 
-                        <div className="mb-8">
-                            <label className="text-[10px] text-muted tracking-wide uppercase block mb-2">Status</label>
-                            <Select
-                                variant="standard"
-                                fullWidth
-                                value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value)}
-                                sx={{
-                                    color: '#1a1208',
-                                    fontFamily: 'Noto Serif JP, serif',
-                                    '&:after': { borderBottomColor: '#b42828' },
-                                }}
-                            >
-                                <MenuItem value="all" sx={{ color: '#1a1208', fontFamily: 'Noto Serif JP, serif' }}>
-                                    All Bookings
-                                </MenuItem>
-                                <MenuItem value="pending" sx={{ color: '#1a1208', fontFamily: 'Noto Serif JP, serif' }}>
-                                    Pending
-                                </MenuItem>
-                                <MenuItem value="completed" sx={{ color: '#1a1208', fontFamily: 'Noto Serif JP, serif' }}>
-                                    Completed
-                                </MenuItem>
-                            </Select>
-                        </div>
-
-                        <div className="mb-8 border-t border-border pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <label className="text-[10px] text-muted tracking-wide uppercase block">Filter By ID</label>
-                                {idFilter.trim() ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => setIdFilter("")}
-                                        className="text-[9px] uppercase tracking-[0.2em] text-accent font-bold cursor-pointer"
-                                    >
-                                        Clear
-                                    </button>
-                                ) : null}
-                            </div>
-                            <input
-                                type="text"
-                                value={idFilter}
-                                onChange={(e) => setIdFilter(e.target.value)}
-                                placeholder="Booking ID or User ID"
-                                className="w-full border border-border bg-card-bg px-3 py-2 text-xs tracking-wide text-foreground outline-none focus:border-accent"
-                            />
-                        </div>
-
-                        <div className="mb-8 border-t border-border pt-6">
-                            <div className="flex items-center justify-between mb-2">
-                                <label className="text-[10px] text-muted tracking-wide uppercase block">Providers</label>
-                                {selectedProviders.length > 0 ? (
-                                    <button
-                                        type="button"
-                                        onClick={() => setSelectedProviders([])}
-                                        className="text-[9px] uppercase tracking-[0.2em] text-accent font-bold cursor-pointer"
-                                    >
-                                        Clear
-                                    </button>
-                                ) : null}
-                            </div>
-                            <div className="space-y-1 max-h-48 overflow-y-auto pr-1">
-                                {providerOptions.length > 0 ? (
-                                    providerOptions.map((provider) => (
-                                        <FormControlLabel
-                                            key={provider}
-                                            control={
-                                                <Checkbox
-                                                    checked={selectedProviders.includes(provider)}
-                                                    onChange={() => toggleProvider(provider)}
-                                                    size="small"
-                                                    sx={{
-                                                        color: '#9a8b79',
-                                                        '&.Mui-checked': { color: '#b42828' },
-                                                        padding: '4px',
-                                                    }}
-                                                />
-                                            }
-                                            label={provider}
-                                            sx={{
-                                                margin: 0,
-                                                alignItems: 'center',
-                                                '& .MuiFormControlLabel-label': {
-                                                    fontSize: '11px',
-                                                    textTransform: 'uppercase',
-                                                    letterSpacing: '0.08em',
-                                                    fontWeight: 700,
-                                                    color: '#5a4a3a',
-                                                },
-                                            }}
-                                        />
-                                    ))
-                                ) : (
-                                    <p className="text-[10px] uppercase tracking-[0.2em] text-muted">No Providers</p>
-                                )}
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="text-[10px] text-muted tracking-wide uppercase block mb-2">Order By</label>
-                            <Select
-                                variant="standard"
-                                fullWidth
-                                value={sortOrder}
-                                onChange={(e) => setSortOrder(e.target.value)}
-                                sx={{
-                                    color: '#1a1208',
-                                    fontFamily: 'Noto Serif JP, serif',
-                                    '&:after': { borderBottomColor: '#b42828' },
-                                }}
-                            >
-                                <MenuItem value="newest" sx={{ color: '#1a1208', fontFamily: 'Noto Serif JP, serif' }}>
-                                    Newest First
-                                </MenuItem>
-                                <MenuItem value="oldest" sx={{ color: '#1a1208', fontFamily: 'Noto Serif JP, serif' }}>
-                                    Oldest First
-                                </MenuItem>
-                            </Select>
-                        </div>
-                    </aside>
-
-                    <section>
-                        {error ? (
-                            <div className="flex items-center gap-3 bg-card-bg border border-border p-5 rounded-lg mb-8">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256" className="text-accent shrink-0"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm-8-80V80a8,8,0,0,1,16,0v56a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,172Z"></path></svg>
-                                <span className="text-xs font-bold uppercase tracking-wider text-accent">{error}</span>
-                            </div>
-                        ) : null}
-
-                        <div className="grid grid-cols-1 gap-12">
-                            {isLoading ? (
-                                <div className="z-20 relative bg-card-bg shadow-sm border border-border flex flex-col md:flex-row min-h-100 items-center justify-center">
-                                    <h3 className="text-3xl text-muted">Loading Bookings...</h3>
-                                </div>
-                            ) : null}
-
-                            {!isLoading && processedBookings.length > 0 ? (
-                                paginatedBookings.map((booking) => (
-                                    <div key={booking.id} className="relative">
-                                        <BookingCard
-                                            bookingId={booking.id}
-                                            createdByUserId={booking.createdByUserId}
-                                            carName={booking.carName}
-                                            carProvider={booking.carProvider}
-                                            bookingDate={booking.bookingDate}
-                                            submitDate={booking.submitDate}
-                                            imgSrc={booking.imgSrc}
-                                            isComplete={booking.isComplete}
-                                            canEdit={isAdmin || !booking.isComplete}
-                                            canDelete={isAdmin || !booking.isComplete}
-                                            onEdit={() => handleOpenEdit(booking)}
-                                            onDelete={() => handleRemove(booking.id)}
-                                            onReview={() => handleOpenReview(booking)}
-                                        />
-                                        {booking.isComplete && (
-                                            <div className="absolute top-6 right-6 bg-accent text-white text-[8px] uppercase tracking-[0.2em] font-bold px-4 py-1 shadow-sm">
-                                                Completed
-                                            </div>
-                                        )}
-                                    </div>
-                                ))
-                            ) : !isLoading ? (
-                                <div className="z-20 relative bg-card-bg shadow-sm border border-border flex flex-col md:flex-row min-h-100 items-center justify-center">
-                                    <div className="text-center">
-                                        <h3 className="text-4xl text-muted mb-8">No Matching Bookings</h3>
-                                        <Link href="/booking" className="bg-accent text-white px-10 py-3 text-[11px] uppercase tracking-[0.3em] hover:opacity-90 transition-all cursor-pointer">
-                                            New Booking
-                                        </Link>
-                                    </div>
-                                </div>
-                            ) : null}
-                        </div>
-
-                        {!isLoading && processedBookings.length > ITEMS_PER_PAGE ? (
-                            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                                <button
-                                    type="button"
-                                    onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
-                                    disabled={currentPage === 1}
-                                    className="px-4 py-2 border border-border text-[10px] uppercase tracking-[0.2em] font-bold text-muted disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                                >
-                                    Prev
-                                </button>
-
-                                {Array.from({ length: totalPages }, (_, index) => index + 1).map((page) => (
-                                    <button
-                                        key={page}
-                                        type="button"
-                                        onClick={() => setCurrentPage(page)}
-                                        className={`px-4 py-2 text-[10px] uppercase tracking-[0.2em] font-bold border cursor-pointer ${
-                                            page === currentPage
-                                                ? "bg-accent text-white border-accent"
-                                                : "bg-card-bg text-muted border-border"
-                                        }`}
-                                    >
-                                        {page}
-                                    </button>
-                                ))}
-
-                                <button
-                                    type="button"
-                                    onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
-                                    disabled={currentPage === totalPages}
-                                    className="px-4 py-2 border border-border text-[10px] uppercase tracking-[0.2em] font-bold text-muted disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                                >
-                                    Next
-                                </button>
-                            </div>
-                        ) : null}
-                    </section>
+                    <BookingList
+                        error={error}
+                        isLoading={isLoading}
+                        processedBookings={processedBookings}
+                        paginatedBookings={paginatedBookings}
+                        isAdmin={isAdmin}
+                        handleOpenEdit={handleOpenEdit}
+                        handleRemove={handleRemove}
+                        handleOpenReview={handleOpenReview}
+                        currentPage={currentPage}
+                        setCurrentPage={setCurrentPage}
+                        totalPages={totalPages}
+                        ITEMS_PER_PAGE={ITEMS_PER_PAGE}
+                    />
                 </div>
             </div>
 
