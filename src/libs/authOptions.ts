@@ -55,8 +55,7 @@ export const authOptions: NextAuthOptions = {
 
               // If you return null then an error will be displayed advising the user to check their details.
               return null
-            } catch (error) {
-              console.error("Credentials authorize failed:", error)
+            } catch (_error) {
               return null
             }
           }

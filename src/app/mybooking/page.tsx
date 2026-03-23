@@ -28,7 +28,6 @@ export default function MyBookingsPage() {
     const [statusFilter, setStatusFilter] = useState("all");
     const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
     const [idFilter, setIdFilter] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
 
     const [myBookings, setMyBookings] = useState<any[]>([]);
 
@@ -99,143 +98,92 @@ export default function MyBookingsPage() {
     }, [session?.user?.token]);
 
     const handleOpenEdit = (booking: any) => {
-        console.log("[handleOpenEdit] Opening modal for booking:", booking);
         setSelectedBooking(booking);
         setIsModalOpen(true);
     };
 
     const handleOpenReview = (booking: any) => {
-        console.log("[handleOpenReview] Opening modal for booking:", booking);
         setSelectedBooking(booking);
         setReviewError("");
         setIsReviewOpen(true);
     };
 
     const handleSaveEdit = async (updatedFields: any) => {
-        console.log("[handleSaveEdit] START", { updatedFields, selectedBooking: selectedBooking?.id });
-        
-        if (!session?.user?.token) {
-            console.error("[handleSaveEdit] No token available");
-            return;
-        }
-        if (!selectedBooking) {
-            console.error("[handleSaveEdit] No selected booking");
-            return;
-        }
+        if (!session?.user?.token || !selectedBooking) return;
 
         try {
             const isoDate = new Date(updatedFields.bookingDate).toISOString();
-            console.log("[handleSaveEdit] Converted date:", { original: updatedFields.bookingDate, iso: isoDate });
-            
-            console.log("[handleSaveEdit] Calling updateBooking...");
             await updateBooking(selectedBooking.id, isoDate, session.user.token, updatedFields.isComplete);
-            console.log("[handleSaveEdit] updateBooking succeeded");
 
-            console.log("[handleSaveEdit] Updating local state...");
-            setMyBookings(myBookings.map(b => 
-                b.id === selectedBooking.id
-                    ? {
-                        ...b,
-                        ...updatedFields,
-                        statusRaw: updatedFields.isComplete ? "completed" : "active",
-                        bookingDate: formatDate(updatedFields.bookingDate),
-                    }
-                    : b
-            ));
+            setMyBookings((prev) =>
+                prev.map((b) =>
+                    b.id === selectedBooking.id
+                        ? {
+                            ...b,
+                            ...updatedFields,
+                            statusRaw: updatedFields.isComplete ? "completed" : "active",
+                            bookingDate: formatDate(updatedFields.bookingDate),
+                        }
+                        : b
+                )
+            );
             setError("");
-            console.log("[handleSaveEdit] Closing modal...");
             setIsModalOpen(false);
-            console.log("[handleSaveEdit] SUCCESS");
         } catch (err) {
             const errorMsg = err instanceof Error ? err.message : "Failed to update booking";
-            console.error("[handleSaveEdit] FAILED:", err, errorMsg);
             setError(errorMsg);
         }
     };
 
     const handleRemove = async (id: string) => {
-        console.log("[handleRemove] Deleting booking:", id);
         if (!session?.user?.token) return;
 
         try {
-            console.log("[handleRemove] Calling deleteBooking...");
             await deleteBooking(id, session.user.token);
-            console.log("[handleRemove] deleteBooking succeeded");
-            console.log("[handleRemove] Updating local state...");
-            setMyBookings(myBookings.filter(b => b.id !== id));
+            setMyBookings((prev) => prev.filter((b) => b.id !== id));
             setError("");
-            console.log("[handleRemove] SUCCESS");
         } catch (err) {
             const errorMsg = err instanceof Error ? err.message : "Failed to remove booking";
-            console.error("[handleRemove] FAILED:", err, errorMsg);
             setError(errorMsg);
         }
     };
 
     const handleSaveReview = async (rating: number, comment: string, isUpdate: boolean) => {
-        console.log("[handleSaveReview] START", { rating, comment, isUpdate, bookingId: selectedBooking?.id });
-        
-        if (!session?.user?.token) {
-            console.error("[handleSaveReview] No token available");
-            return;
-        }
-        if (!selectedBooking) {
-            console.error("[handleSaveReview] No selected booking");
-            return;
-        }
+        if (!session?.user?.token || !selectedBooking) return;
 
         try {
             if (isUpdate) {
-                console.log("[handleSaveReview] Calling updateReview...");
                 await updateReview(selectedBooking.id, { rating, comment }, session.user.token);
-                console.log("[handleSaveReview] updateReview succeeded");
             } else {
-                console.log("[handleSaveReview] Calling createReview...");
                 await createReview(selectedBooking.id, rating, comment, session.user.token);
-                console.log("[handleSaveReview] createReview succeeded");
             }
-            
-            setMyBookings(myBookings.map(b => 
-                b.id === selectedBooking.id ? { ...b, rating, comment, hasReview: true } : b
-            ));
+
+            setMyBookings((prev) =>
+                prev.map((b) => (b.id === selectedBooking.id ? { ...b, rating, comment, hasReview: true } : b))
+            );
             setReviewError("");
-            console.log("[handleSaveReview] Closing modal...");
             setIsReviewOpen(false);
-            console.log("[handleSaveReview] SUCCESS");
         } catch (err) {
             const errorMsg = err instanceof Error ? err.message : "Failed to submit review";
-            console.error("[handleSaveReview] FAILED:", err, errorMsg);
             setReviewError(errorMsg);
         }
     };
 
     const handleDeleteReview = async () => {
-        console.log("[handleDeleteReview] START", { bookingId: selectedBooking?.id });
-        
-        if (!session?.user?.token) {
-            console.error("[handleDeleteReview] No token available");
-            return;
-        }
-        if (!selectedBooking) {
-            console.error("[handleDeleteReview] No selected booking");
-            return;
-        }
+        if (!session?.user?.token || !selectedBooking) return;
 
         try {
-            console.log("[handleDeleteReview] Calling deleteReview...");
             await deleteReview(selectedBooking.id, session.user.token);
-            console.log("[handleDeleteReview] deleteReview succeeded");
-            
-            setMyBookings(myBookings.map(b => 
-                b.id === selectedBooking.id ? { ...b, rating: undefined, comment: undefined, hasReview: false } : b
-            ));
+
+            setMyBookings((prev) =>
+                prev.map((b) =>
+                    b.id === selectedBooking.id ? { ...b, rating: undefined, comment: undefined, hasReview: false } : b
+                )
+            );
             setError("");
-            console.log("[handleDeleteReview] Closing modal...");
             setIsReviewOpen(false);
-            console.log("[handleDeleteReview] SUCCESS");
         } catch (err) {
             const errorMsg = err instanceof Error ? err.message : "Failed to delete review";
-            console.error("[handleDeleteReview] FAILED:", err, errorMsg);
             setError(errorMsg);
         }
     };
@@ -282,19 +230,6 @@ export default function MyBookingsPage() {
     };
 
     const processedBookings = getProcessedBookings();
-    const totalPages = Math.max(1, Math.ceil(processedBookings.length / ITEMS_PER_PAGE));
-    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-    const paginatedBookings = processedBookings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
-
-    useEffect(() => {
-        setCurrentPage(1);
-    }, [sortOrder, statusFilter, selectedProviders, idFilter]);
-
-    useEffect(() => {
-        if (currentPage > totalPages) {
-            setCurrentPage(totalPages);
-        }
-    }, [currentPage, totalPages]);
 
     return (
         <main className="min-h-screen bg-background">
@@ -319,14 +254,10 @@ export default function MyBookingsPage() {
                         error={error}
                         isLoading={isLoading}
                         processedBookings={processedBookings}
-                        paginatedBookings={paginatedBookings}
                         isAdmin={isAdmin}
                         handleOpenEdit={handleOpenEdit}
                         handleRemove={handleRemove}
                         handleOpenReview={handleOpenReview}
-                        currentPage={currentPage}
-                        setCurrentPage={setCurrentPage}
-                        totalPages={totalPages}
                         ITEMS_PER_PAGE={ITEMS_PER_PAGE}
                     />
                 </div>

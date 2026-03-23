@@ -102,19 +102,13 @@ export default function EditBookingModal({ isOpen, initialData, onClose, onSave 
 
                     <div className="flex gap-4 pt-4">
                         <button 
-                            onClick={() => {
-                                console.log("[EditBookingModal] Cancel clicked");
-                                onClose();
-                            }}
+                            onClick={onClose}
                             className="flex-1 border border-border text-foreground py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:bg-[#f4efe8] transition-all active:scale-[0.99] cursor-pointer"
                         >
                             Cancel
                         </button>
                         <button 
-                            onClick={() => {
-                                console.log("[EditBookingModal] Save clicked with data:", { bookingDate, carProvider, isComplete });
-                                onSave({ bookingDate, carProvider, isComplete });
-                            }}
+                            onClick={() => onSave({ bookingDate, carProvider, isComplete })}
                             className="flex-1 bg-accent text-white py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:opacity-90 transition-all shadow-sm active:scale-[0.99] cursor-pointer"
                         >
                             Save Changes

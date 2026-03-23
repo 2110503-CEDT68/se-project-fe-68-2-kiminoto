@@ -113,7 +113,7 @@ export default function BookingCard({
                         {canDelete ?? true ? (
                             <button
                                 onClick={onDelete}
-                                className="w-full sm:w-auto sm:min-w-52 border border-border text-muted py-3 px-8 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-red-50 hover:text-red-700 hover:border-red-100 transition-all active:scale-[0.99] cursor-pointer"
+                                className="w-full border border-border text-muted py-3 px-8 text-[11px] font-semibold uppercase tracking-[0.3em] hover:bg-red-50 hover:text-red-700 hover:border-red-100 transition-all active:scale-[0.99] cursor-pointer"
                             >
                                 Remove
                             </button>

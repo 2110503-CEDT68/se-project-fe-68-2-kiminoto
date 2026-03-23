@@ -31,7 +31,6 @@ export default function ProvidersPage() {
       const providersResponse = await getVenues();
       setProviders(providersResponse?.data ?? []);
     } catch (loadError) {
-      console.error("Failed to load providers:", loadError);
       setError(loadError instanceof Error ? loadError.message : "Failed to load providers");
     } finally {
       setIsLoading(false);

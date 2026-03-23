@@ -27,7 +27,7 @@ export default function ReviewModal({ isOpen, initialData, onClose, onSave, onDe
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm">
+        <div className="fixed inset-0 z-200 flex items-center justify-center p-6 bg-black/70 backdrop-blur-sm">
             <div className="bg-card-bg max-w-lg w-full overflow-hidden shadow-lg border border-border">
                 <div className="bg-foreground p-8 text-white">
                     <h2 className="text-3xl tracking-tight font-bold">
@@ -73,19 +73,13 @@ export default function ReviewModal({ isOpen, initialData, onClose, onSave, onDe
                     <div className="flex flex-col gap-4 mt-8">
                         <div className="flex gap-4">
                             <button 
-                                onClick={() => {
-                                    console.log("[ReviewModal] Cancel clicked");
-                                    onClose();
-                                }}
+                                onClick={onClose}
                                 className="flex-1 border border-border text-foreground py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:bg-[#f4efe8] transition-all active:scale-[0.99] cursor-pointer"
                             >
                                 Cancel
                             </button>
                             <button 
-                                onClick={() => {
-                                    console.log("[ReviewModal] Save clicked with data:", { rating, comment, isUpdate: initialData.hasReview });
-                                    onSave(rating, comment, initialData.hasReview);
-                                }}
+                                onClick={() => onSave(rating, comment, initialData.hasReview)}
                                 className="flex-1 bg-accent text-white py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:opacity-90 transition-all shadow-sm active:scale-[0.99] cursor-pointer"
                             >
                                 {initialData.hasReview ? "Update" : "Submit"}
@@ -93,10 +87,7 @@ export default function ReviewModal({ isOpen, initialData, onClose, onSave, onDe
                         </div>
                         {initialData.hasReview && (
                             <button 
-                                onClick={() => {
-                                    console.log("[ReviewModal] Delete clicked");
-                                    onDelete();
-                                }}
+                                onClick={onDelete}
                                 className="w-full border border-red-200 text-red-700 py-3 text-[10px] font-semibold uppercase tracking-[0.2em] hover:bg-red-50 transition-all active:scale-[0.99] cursor-pointer"
                             >
                                 Delete Review

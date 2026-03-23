@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import BookingCard from "./BookingCard";
 import BookingPagination from "./BookingPagination";
@@ -8,14 +9,10 @@ interface BookingListProps {
     error: string;
     isLoading: boolean;
     processedBookings: any[];
-    paginatedBookings: any[];
     isAdmin: boolean;
     handleOpenEdit: (booking: any) => void;
     handleRemove: (id: string) => void;
     handleOpenReview: (booking: any) => void;
-    currentPage: number;
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-    totalPages: number;
     ITEMS_PER_PAGE: number;
 }
 
@@ -23,16 +20,28 @@ export default function BookingList({
     error,
     isLoading,
     processedBookings,
-    paginatedBookings,
     isAdmin,
     handleOpenEdit,
     handleRemove,
     handleOpenReview,
-    currentPage,
-    setCurrentPage,
-    totalPages,
     ITEMS_PER_PAGE,
 }: BookingListProps) {
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const totalPages = Math.max(1, Math.ceil(processedBookings.length / ITEMS_PER_PAGE));
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedBookings = processedBookings.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [processedBookings]);
+
+    useEffect(() => {
+        if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [currentPage, totalPages]);
+
     return (
         <section>
             {error ? (
