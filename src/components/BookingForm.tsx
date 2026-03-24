@@ -128,7 +128,7 @@ export default function BookingForm() {
                         </div>
                         <h3 className="text-3xl font-bold mb-3 text-foreground">Booking Confirmed</h3>
                         <p className="text-muted text-[11px] uppercase tracking-widest mb-10 leading-loose">
-                            Your reservation for <span className="text-foreground font-bold">{bookingCar}</span> <br /> is secured for {bookingDate}
+                            Your reservation is secured.
                         </p>
                         <button
                             onClick={() => setShowConfirm(false)}
