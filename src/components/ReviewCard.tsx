@@ -3,20 +3,14 @@ import { Rating } from "@mui/material";
 import UpvoteDownvote from "./UpvoteDownvote";
 
 interface ReviewCardProps {
-    /** User display name */
-    userName: string;
-    /** Star rating (1–5) */
-    rating: number;
-    /** Review comment text */
-    comment: string;
-    /** ISO date string of when the review was created */
-    createdAt: string;
-    /** Initial upvote/downvote score */
-    initialScore?: number;
-    /** Called when the user votes */
-    onVote?: (voteState: "upvote" | "downvote" | null) => void;
-    /** Disable voting (e.g. not logged in) */
-    disableVote?: boolean;
+  userName: string;
+  rating: number;
+  comment: string;
+  createdAt: string;
+  initialScore?: number;
+  initialVoteState?: "upvote" | "downvote" | null;
+  onVote?: (voteState: "upvote" | "downvote" | null) => void;
+  disableVote?: boolean;
 }
 
 export default function ReviewCard({
@@ -25,6 +19,7 @@ export default function ReviewCard({
     comment,
     createdAt,
     initialScore = 0,
+    initialVoteState = null,
     onVote,
     disableVote = false,
 }: ReviewCardProps) {
@@ -34,9 +29,10 @@ export default function ReviewCard({
         <div className="bg-card-bg border border-border p-6 flex items-start gap-5 group hover:shadow-md transition-shadow duration-300">
             {/* Vote column */}
             <UpvoteDownvote
-                initialScore={initialScore}
-                onVote={onVote}
-                disabled={disableVote}
+            initialScore={initialScore}
+            initialVoteState={initialVoteState}
+            onVote={onVote}
+            disabled={disableVote}
             />
 
             {/* Content column */}

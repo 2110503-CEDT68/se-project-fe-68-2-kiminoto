@@ -25,6 +25,10 @@ export interface Review {
   rating: number
   comment: string
   createdAt: string
+  upvotes?: number
+  downvotes?: number
+  score?: number
+  userVote?: "upvote" | "downvote" | null
 }
 
 export interface ProviderReviewApiItem {
@@ -35,6 +39,10 @@ export interface ProviderReviewApiItem {
     comment?: string
     createdAt?: string
   }
+  upvotes?: number
+  downvotes?: number
+  score?: number
+  userVote?: "upvote" | "downvote" | null
 }
 
 export interface Provider {
