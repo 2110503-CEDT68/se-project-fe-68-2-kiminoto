@@ -1,6 +1,5 @@
 // src/components/Banner.tsx
 "use client";
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -8,28 +7,10 @@ interface BannerProps {
     title: string;
     subtitle: string;
     imgSrc: string;
-    sortBy?: "name" | "date" | "popularity";
-    onSortChange?: (sortBy: "name" | "date" | "popularity") => void;
 }
 
-export default function Banner({ title, subtitle, imgSrc, sortBy = "name", onSortChange }: BannerProps) {
+export default function Banner({ title, subtitle, imgSrc }: BannerProps) {
     const router = useRouter();
-    const [activeSort, setActiveSort] = useState<"name" | "date" | "popularity">(sortBy);
-
-    const sortOptions = [
-        { value: "name", label: "Name" },
-        { value: "date", label: "Date Added" },
-        { value: "popularity", label: "Popularity" },
-    ];
-
-    useEffect(() => {
-        setActiveSort(sortBy);
-    }, [sortBy]);
-
-    const handleSortChange = (value: "name" | "date" | "popularity") => {
-        setActiveSort(value);
-        onSortChange?.(value);
-    };
 
     return (
         <>
@@ -73,29 +54,6 @@ export default function Banner({ title, subtitle, imgSrc, sortBy = "name", onSor
                                 </svg>
                             </button>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <br/><br/><br/><br/>
-            <div className="mx-auto max-w-7xl px-6 md:px-10 -mt-20 mb-8">
-                <div className="bg-white border border-black rounded-3xl px-6 py-4 shadow-sm w-fit">
-                    <p className="text-sm uppercase tracking-[0.3em] text-muted mb-3">Sort by</p>
-                    <div className="flex flex-wrap gap-3">
-                        {sortOptions.map((option) => (
-                            <button
-                                key={option.value}
-                                type="button"
-                                aria-pressed={activeSort === option.value}
-                                onClick={() => handleSortChange(option.value as "name" | "date" | "popularity")}
-                                className={`px-4 py-2 text-xs uppercase tracking-[0.25em] rounded-full border transition-all duration-200 ${
-                                    activeSort === option.value
-                                        ? "border-black bg-black text-white"
-                                        : "border-black/20 bg-white text-black hover:bg-black/5"
-                                }`}
-                            >
-                                {option.label}
-                            </button>
-                        ))}
                     </div>
                 </div>
             </div>

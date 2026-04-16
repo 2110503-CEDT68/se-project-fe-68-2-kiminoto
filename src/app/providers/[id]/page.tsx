@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +7,7 @@ import { Rating } from "@mui/material";
 import getVenue from "@/libs/getVenue";
 import getProviderReviews from "@/libs/getProviderReviews";
 import ReviewCard from "@/components/ReviewCard";
+import SortControls, { SortOption } from "@/components/SortControls";
 
 interface Review {
   _id: string;
@@ -52,6 +53,7 @@ export default function ProviderReviewsPage() {
   const { id } = useParams<{ id: string }>();
   const [provider, setProvider] = useState<Provider | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [sortBy, setSortBy] = useState<SortOption>("date");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -77,10 +79,6 @@ export default function ProviderReviewsPage() {
             createdAt: item.review?.createdAt ?? new Date(0).toISOString(),
           }));
 
-        // Sort newest first
-        extracted.sort(
-          (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        );
         setReviews(extracted);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load provider");
@@ -90,6 +88,23 @@ export default function ProviderReviewsPage() {
     };
     load();
   }, [id]);
+
+  const sortedReviews = useMemo(() => {
+    const next = [...reviews];
+
+    if (sortBy === "popularity") {
+      next.sort((a, b) => {
+        if (b.rating !== a.rating) return b.rating - a.rating;
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      });
+      return next;
+    }
+
+    next.sort(
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    return next;
+  }, [reviews, sortBy]);
 
   const coverImage = providerImages[Math.abs(hashCode(id ?? "")) % providerImages.length];
 
@@ -178,17 +193,23 @@ export default function ProviderReviewsPage() {
             </>
           ) : null}
         </div>
+        
 
         {/* Reviews section */}
-        <div className="mb-6 flex items-center gap-4">
-          <h3 className="text-xs uppercase tracking-[0.3em] text-muted font-semibold">
-            Customer Reviews
-          </h3>
-          <div className="flex-1 h-px bg-border" />
-          {!isLoading && !error && (
-            <span className="text-[10px] uppercase tracking-[0.2em] text-muted">
-              {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
-            </span>
+        <div className="mb-6 space-y-4 md:flex-row md:items-end md:justify-between">
+          <div className="flex items-center gap-4">
+            <h3 className="text-xs uppercase tracking-[0.3em] text-muted font-semibold">
+              Customer Reviews
+            </h3>
+            <div className="flex-1 h-px bg-border" />
+            {!isLoading && !error && (
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted">
+                {reviews.length} {reviews.length === 1 ? "review" : "reviews"}
+              </span>
+            )}
+          </div>
+          {!isLoading && !error && reviews.length > 0 && (
+            <SortControls sortBy={sortBy} onSortChange={setSortBy} />
           )}
         </div>
 
@@ -210,7 +231,7 @@ export default function ProviderReviewsPage() {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
-            {reviews.map((review, index) => (
+            {sortedReviews.map((review, index) => (
               <ReviewCard
                 key={review._id ?? index}
                 userName={
