@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Rating } from "@mui/material";
 import getVenue from "@/libs/getVenue";
+import getProviderReviews from "@/libs/getProviderReviews";
 import ReviewCard from "@/components/ReviewCard";
 
 interface Review {
@@ -13,6 +14,16 @@ interface Review {
   rating: number;
   comment: string;
   createdAt: string;
+}
+
+interface ProviderReviewApiItem {
+  _id: string;
+  user?: { _id?: string; name?: string; email?: string };
+  review?: {
+    rating?: number;
+    comment?: string;
+    createdAt?: string;
+  };
 }
 
 interface Provider {
@@ -54,18 +65,18 @@ export default function ProviderReviewsPage() {
         const providerData: Provider = data?.data ?? data;
         setProvider(providerData);
 
-        // Extract reviews from bookings
-        const extracted: Review[] = [];
-        const bookings = providerData?.bookings ?? [];
-        for (const booking of bookings) {
-          const review = booking.review ?? (booking.reviews && booking.reviews[0]);
-          if (review) {
-            extracted.push({
-              ...review,
-              user: review.user ?? booking.user,
-            });
-          }
-        }
+        const reviewsRes = await getProviderReviews(id);
+        const reviewItems: ProviderReviewApiItem[] = reviewsRes?.data ?? [];
+        const extracted: Review[] = reviewItems
+          .filter((item) => typeof item.review?.rating === "number")
+          .map((item) => ({
+            _id: item._id,
+            user: item.user,
+            rating: item.review?.rating ?? 0,
+            comment: item.review?.comment ?? "",
+            createdAt: item.review?.createdAt ?? new Date(0).toISOString(),
+          }));
+
         // Sort newest first
         extracted.sort(
           (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
