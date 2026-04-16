@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 5, "column": 0}, "map": {"version":3,"sources":["file:///Users/siwakorn/Documents/%5B01%5D%20Uni/%5B02%5D%20Year%201%20-%20Term%202/Frontend/fe-project-68-das-buch/src/app/booking/layout.tsx"],"sourcesContent":["export default function BookingLayout({children}:{children: React.ReactNode}) {\n    return (\n        <div>\n            {children}\n        </div>\n    )\n}"],"names":[],"mappings":";;;;;AAAe,SAAS,cAAc,EAAC,QAAQ,EAA6B;IACxE,qBACI,8OAAC;kBACI;;;;;;AAGb","debugId":null}}]
-}
