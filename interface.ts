@@ -18,3 +18,35 @@ interface VenueItem {
     pagination: Object,
     data: VenueItem[]
   }
+
+export interface Review {
+  _id: string
+  user?: { name?: string; email?: string }
+  rating: number
+  comment: string
+  createdAt: string
+}
+
+export interface ProviderReviewApiItem {
+  _id: string
+  user?: { _id?: string; name?: string; email?: string }
+  review?: {
+    rating?: number
+    comment?: string
+    createdAt?: string
+  }
+}
+
+export interface Provider {
+  _id: string
+  name: string
+  address: string
+  tel: string
+  avgRating?: number
+  bookings?: Array<{
+    _id: string
+    review?: Review
+    reviews?: Review[]
+    user?: { name?: string; email?: string }
+  }>
+}

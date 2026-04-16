@@ -8,38 +8,7 @@ import getVenue from "@/libs/getVenue";
 import getProviderReviews from "@/libs/getProviderReviews";
 import ReviewCard from "@/components/ReviewCard";
 import SortControls, { SortOption } from "@/components/SortControls";
-
-interface Review {
-  _id: string;
-  user?: { name?: string; email?: string };
-  rating: number;
-  comment: string;
-  createdAt: string;
-}
-
-interface ProviderReviewApiItem {
-  _id: string;
-  user?: { _id?: string; name?: string; email?: string };
-  review?: {
-    rating?: number;
-    comment?: string;
-    createdAt?: string;
-  };
-}
-
-interface Provider {
-  _id: string;
-  name: string;
-  address: string;
-  tel: string;
-  avgRating?: number;
-  bookings?: Array<{
-    _id: string;
-    review?: Review;
-    reviews?: Review[];
-    user?: { name?: string; email?: string };
-  }>;
-}
+import type { Review, ProviderReviewApiItem, Provider } from "../../../../interface";
 
 const providerImages = [
   "/img/img1.jpg",
