@@ -1,5 +1,6 @@
 export default async function deleteBooking(bookingId: string, token: string) {
-    const response = await fetch(`https://backend-paopaopao.vercel.app/api/v1/bookings/${bookingId}`, {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+    const response = await fetch(`${backendUrl}/api/v1/bookings/${bookingId}`, {
         method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`,

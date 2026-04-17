@@ -13,6 +13,8 @@ interface ReviewCardProps {
     createdAt: string;
     /** Initial upvote/downvote score */
     initialScore?: number;
+    /** Current user's vote state */
+    initialVoteState?: "upvote" | "downvote" | null;
     /** Called when the user votes */
     onVote?: (voteState: "upvote" | "downvote" | null) => void;
     /** Disable voting (e.g. not logged in) */
@@ -25,6 +27,7 @@ export default function ReviewCard({
     comment,
     createdAt,
     initialScore = 0,
+    initialVoteState = null,
     onVote,
     disableVote = false,
 }: ReviewCardProps) {
@@ -35,6 +38,7 @@ export default function ReviewCard({
             {/* Vote column */}
             <UpvoteDownvote
                 initialScore={initialScore}
+                initialVoteState={initialVoteState}
                 onVote={onVote}
                 disabled={disableVote}
             />
@@ -66,7 +70,7 @@ export default function ReviewCard({
                 />
 
                 {/* Comment body */}
-                <p className="text-sm text-foreground/85 leading-relaxed whitespace-pre-wrap break-words">
+                <p className="text-sm text-foreground/85 leading-relaxed whitespace-pre-wrap wrap-break-word">
                     {comment}
                 </p>
             </div>

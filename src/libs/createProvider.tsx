@@ -5,7 +5,8 @@ type ProviderPayload = {
 };
 
 export default async function createProvider(payload: ProviderPayload, token: string) {
-    const response = await fetch("https://backend-paopaopao.vercel.app/api/v1/car-providers", {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+    const response = await fetch(`${backendUrl}/api/v1/car-providers`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

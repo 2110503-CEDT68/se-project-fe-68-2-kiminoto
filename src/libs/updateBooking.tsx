@@ -10,7 +10,8 @@ export default async function updateBooking(
         bookingStatus: isComplete ? "completed" : "active",
     };
 
-    const response = await fetch(`https://backend-paopaopao.vercel.app/api/v1/bookings/${bookingId}`, {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+    const response = await fetch(`${backendUrl}/api/v1/bookings/${bookingId}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",

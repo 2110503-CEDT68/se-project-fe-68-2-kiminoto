@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 type VoteState = "upvote" | "downvote" | null;
 
@@ -23,6 +23,14 @@ export default function UpvoteDownvote({
     const [voteState, setVoteState] = useState<VoteState>(initialVoteState);
     const [score, setScore] = useState(initialScore);
     const [isAnimating, setIsAnimating] = useState<"up" | "down" | null>(null);
+
+    useEffect(() => {
+        setVoteState(initialVoteState);
+    }, [initialVoteState]);
+
+    useEffect(() => {
+        setScore(initialScore);
+    }, [initialScore]);
 
     const handleVote = useCallback(
         (type: "upvote" | "downvote") => {

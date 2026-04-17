@@ -4,10 +4,13 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Rating } from "@mui/material";
+import { useSession } from "next-auth/react";
 import getVenue from "@/libs/getVenue";
 import getProviderReviews from "@/libs/getProviderReviews";
 import ReviewCard from "@/components/ReviewCard";
 import SortControls, { SortOption } from "@/components/SortControls";
+
+type VoteState = "upvote" | "downvote" | null;
 
 interface Review {
   _id: string;
@@ -15,6 +18,8 @@ interface Review {
   rating: number;
   comment: string;
   createdAt: string;
+  score: number;
+  voteState: VoteState;
 }
 
 interface ProviderReviewApiItem {
@@ -24,6 +29,11 @@ interface ProviderReviewApiItem {
     rating?: number;
     comment?: string;
     createdAt?: string;
+  };
+  voteSummary?: {
+    upvoteCount?: number;
+    downvoteCount?: number;
+    userVote?: "upvote" | "downvote" | null;
   };
 }
 
@@ -51,11 +61,13 @@ const providerImages = [
 
 export default function ProviderReviewsPage() {
   const { id } = useParams<{ id: string }>();
+  const { data: session, status } = useSession();
   const [provider, setProvider] = useState<Provider | null>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
   const [sortBy, setSortBy] = useState<SortOption>("date");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
+  const [voteError, setVoteError] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -77,6 +89,10 @@ export default function ProviderReviewsPage() {
             rating: item.review?.rating ?? 0,
             comment: item.review?.comment ?? "",
             createdAt: item.review?.createdAt ?? new Date(0).toISOString(),
+            score:
+              (item.voteSummary?.upvoteCount ?? 0) -
+              (item.voteSummary?.downvoteCount ?? 0),
+            voteState: item.voteSummary?.userVote ?? null,
           }));
 
         setReviews(extracted);
@@ -94,7 +110,7 @@ export default function ProviderReviewsPage() {
 
     if (sortBy === "popularity") {
       next.sort((a, b) => {
-        if (b.rating !== a.rating) return b.rating - a.rating;
+        if (b.score !== a.score) return b.score - a.score;
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
       return next;
@@ -105,6 +121,81 @@ export default function ProviderReviewsPage() {
     );
     return next;
   }, [reviews, sortBy]);
+
+  const handleVote = async (bookingId: string, nextVoteState: VoteState) => {
+    if (status !== "authenticated" || !session?.user?.token) {
+      return;
+    }
+
+    const currentReview = reviews.find((review) => review._id === bookingId);
+    if (!currentReview) {
+      return;
+    }
+
+    const previousScore = currentReview.score;
+    const previousVoteState = currentReview.voteState;
+
+    const nextScore = calculateNextScore(previousScore, previousVoteState, nextVoteState);
+    const backendUrl =
+      process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+
+    const endpoint =
+      nextVoteState === "upvote"
+        ? "upvote"
+        : nextVoteState === "downvote"
+        ? "downvote"
+        : previousVoteState === "upvote"
+        ? "upvote"
+        : "downvote";
+
+    const method = nextVoteState === null ? "DELETE" : "POST";
+
+    setVoteError("");
+    setReviews((previousReviews) =>
+      previousReviews.map((review) =>
+        review._id === bookingId
+          ? {
+              ...review,
+              score: nextScore,
+              voteState: nextVoteState,
+            }
+          : review
+      )
+    );
+
+    try {
+      const response = await fetch(
+        `${backendUrl}/api/v1/bookings/${bookingId}/votes/${endpoint}`,
+        {
+          method,
+          headers: {
+            Authorization: `Bearer ${session.user.token}`,
+          },
+        }
+      );
+
+      const data = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(
+          typeof data?.message === "string" ? data.message : "Failed to update vote"
+        );
+      }
+    } catch (err) {
+      setReviews((previousReviews) =>
+        previousReviews.map((review) =>
+          review._id === bookingId
+            ? {
+                ...review,
+                score: previousScore,
+                voteState: previousVoteState,
+              }
+            : review
+        )
+      );
+      setVoteError(err instanceof Error ? err.message : "Failed to update vote");
+    }
+  };
 
   const coverImage = providerImages[Math.abs(hashCode(id ?? "")) % providerImages.length];
 
@@ -231,6 +322,11 @@ export default function ProviderReviewsPage() {
           </div>
         ) : (
           <div className="flex flex-col gap-4">
+            {voteError ? (
+              <p className="text-xs font-bold uppercase tracking-wider text-accent">
+                {voteError}
+              </p>
+            ) : null}
             {sortedReviews.map((review, index) => (
               <ReviewCard
                 key={review._id ?? index}
@@ -242,7 +338,12 @@ export default function ProviderReviewsPage() {
                 rating={review.rating}
                 comment={review.comment}
                 createdAt={review.createdAt}
-                disableVote={true}
+                initialScore={review.score}
+                initialVoteState={review.voteState}
+                onVote={(nextVoteState) => {
+                  void handleVote(review._id, nextVoteState);
+                }}
+                disableVote={status !== "authenticated"}
               />
             ))}
           </div>
@@ -259,4 +360,24 @@ function hashCode(str: string): number {
     hash |= 0;
   }
   return hash;
+}
+
+function calculateNextScore(
+  currentScore: number,
+  currentVoteState: VoteState,
+  nextVoteState: VoteState
+): number {
+  if (currentVoteState === nextVoteState) {
+    return currentScore;
+  }
+
+  if (currentVoteState === null) {
+    return currentScore + (nextVoteState === "upvote" ? 1 : -1);
+  }
+
+  if (nextVoteState === null) {
+    return currentScore + (currentVoteState === "upvote" ? -1 : 1);
+  }
+
+  return currentScore + (nextVoteState === "upvote" ? 2 : -2);
 }

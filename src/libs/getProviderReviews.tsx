@@ -1,6 +1,7 @@
 export default async function getProviderReviews(providerId: string) {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
     const response = await fetch(
-        `https://backend-paopaopao.vercel.app/api/v1/car-providers/${providerId}/reviews`,
+        `${backendUrl}/api/v1/car-providers/${providerId}/reviews`,
         {
             method: "GET",
             cache: "no-store",
