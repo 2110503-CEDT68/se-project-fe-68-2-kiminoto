@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 
 type VoteState = "upvote" | "downvote" | null;
 
@@ -23,6 +23,7 @@ export default function UpvoteDownvote({
     const [voteState, setVoteState] = useState<VoteState>(initialVoteState);
     const [score, setScore] = useState(initialScore);
     const [isAnimating, setIsAnimating] = useState<"up" | "down" | null>(null);
+    const clickLockRef = useRef(false);
 
     useEffect(() => {
         setVoteState(initialVoteState);
@@ -32,9 +33,16 @@ export default function UpvoteDownvote({
         setScore(initialScore);
     }, [initialScore]);
 
+    useEffect(() => {
+        if (!disabled) {
+            clickLockRef.current = false;
+        }
+    }, [disabled, initialScore, initialVoteState]);
+
     const handleVote = useCallback(
         (type: "upvote" | "downvote") => {
-            if (disabled) return;
+            if (disabled || clickLockRef.current) return;
+            clickLockRef.current = true;
 
             let newVoteState: VoteState;
             let scoreDelta: number;

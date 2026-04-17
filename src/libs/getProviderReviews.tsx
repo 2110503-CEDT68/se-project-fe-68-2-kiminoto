@@ -1,10 +1,20 @@
-export default async function getProviderReviews(providerId: string) {
+export default async function getProviderReviews(
+    providerId: string,
+    token?: string | null
+) {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+    const headers: HeadersInit = {};
+
+    if (token) {
+        headers.Authorization = `Bearer ${token}`;
+    }
+
     const response = await fetch(
         `${backendUrl}/api/v1/car-providers/${providerId}/reviews`,
         {
             method: "GET",
             cache: "no-store",
+            headers,
         }
     )
 

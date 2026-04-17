@@ -68,9 +68,12 @@ export default function ProviderReviewsPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
   const [voteError, setVoteError] = useState("");
+  const [pendingVotes, setPendingVotes] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     if (!id) return;
+    if (status === "loading") return;
+
     const load = async () => {
       try {
         setIsLoading(true);
@@ -79,7 +82,10 @@ export default function ProviderReviewsPage() {
         const providerData: Provider = data?.data ?? data;
         setProvider(providerData);
 
-        const reviewsRes = await getProviderReviews(id);
+        const reviewsRes = await getProviderReviews(
+          id,
+          status === "authenticated" ? session?.user?.token : null
+        );
         const reviewItems: ProviderReviewApiItem[] = reviewsRes?.data ?? [];
         const extracted: Review[] = reviewItems
           .filter((item) => typeof item.review?.rating === "number")
@@ -103,7 +109,7 @@ export default function ProviderReviewsPage() {
       }
     };
     load();
-  }, [id]);
+  }, [id, session?.user?.token, status]);
 
   const sortedReviews = useMemo(() => {
     const next = [...reviews];
@@ -127,6 +133,10 @@ export default function ProviderReviewsPage() {
       return;
     }
 
+    if (pendingVotes[bookingId]) {
+      return;
+    }
+
     const currentReview = reviews.find((review) => review._id === bookingId);
     if (!currentReview) {
       return;
@@ -134,6 +144,10 @@ export default function ProviderReviewsPage() {
 
     const previousScore = currentReview.score;
     const previousVoteState = currentReview.voteState;
+
+    if (previousVoteState === null && nextVoteState === null) {
+      return;
+    }
 
     const nextScore = calculateNextScore(previousScore, previousVoteState, nextVoteState);
     const backendUrl =
@@ -151,6 +165,7 @@ export default function ProviderReviewsPage() {
     const method = nextVoteState === null ? "DELETE" : "POST";
 
     setVoteError("");
+    setPendingVotes((previous) => ({ ...previous, [bookingId]: true }));
     setReviews((previousReviews) =>
       previousReviews.map((review) =>
         review._id === bookingId
@@ -194,6 +209,8 @@ export default function ProviderReviewsPage() {
         )
       );
       setVoteError(err instanceof Error ? err.message : "Failed to update vote");
+    } finally {
+      setPendingVotes((previous) => ({ ...previous, [bookingId]: false }));
     }
   };
 
@@ -343,7 +360,9 @@ export default function ProviderReviewsPage() {
                 onVote={(nextVoteState) => {
                   void handleVote(review._id, nextVoteState);
                 }}
-                disableVote={status !== "authenticated"}
+                disableVote={
+                  status !== "authenticated" || Boolean(pendingVotes[review._id])
+                }
               />
             ))}
           </div>
