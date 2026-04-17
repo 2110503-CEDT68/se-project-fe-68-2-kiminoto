@@ -4,52 +4,12 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Rating } from "@mui/material";
-import { useSession } from "next-auth/react";
 import getVenue from "@/libs/getVenue";
 import getProviderReviews from "@/libs/getProviderReviews";
 import ReviewCard from "@/components/ReviewCard";
 import SortControls, { SortOption } from "@/components/SortControls";
-
-type VoteState = "upvote" | "downvote" | null;
-
-interface Review {
-  _id: string;
-  user?: { name?: string; email?: string };
-  rating: number;
-  comment: string;
-  createdAt: string;
-  score: number;
-  voteState: VoteState;
-}
-
-interface ProviderReviewApiItem {
-  _id: string;
-  user?: { _id?: string; name?: string; email?: string };
-  review?: {
-    rating?: number;
-    comment?: string;
-    createdAt?: string;
-  };
-  voteSummary?: {
-    upvoteCount?: number;
-    downvoteCount?: number;
-    userVote?: "upvote" | "downvote" | null;
-  };
-}
-
-interface Provider {
-  _id: string;
-  name: string;
-  address: string;
-  tel: string;
-  avgRating?: number;
-  bookings?: Array<{
-    _id: string;
-    review?: Review;
-    reviews?: Review[];
-    user?: { name?: string; email?: string };
-  }>;
-}
+import type { Review, ProviderReviewApiItem, Provider, VoteState } from "@/interface";
+import { useSession } from "next-auth/react";
 
 const providerImages = [
   "/img/img1.jpg",
@@ -78,6 +38,7 @@ export default function ProviderReviewsPage() {
       try {
         setIsLoading(true);
         setError("");
+
         const data = await getVenue(id);
         const providerData: Provider = data?.data ?? data;
         setProvider(providerData);
@@ -108,6 +69,7 @@ export default function ProviderReviewsPage() {
         setIsLoading(false);
       }
     };
+
     load();
   }, [id, session?.user?.token, status]);
 
@@ -116,7 +78,9 @@ export default function ProviderReviewsPage() {
 
     if (sortBy === "popularity") {
       next.sort((a, b) => {
-        if (b.score !== a.score) return b.score - a.score;
+        const scoreA = a.score ?? 0;
+        const scoreB = b.score ?? 0;
+        if (scoreB !== scoreA) return scoreB - scoreA;
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       });
       return next;
@@ -218,7 +182,6 @@ export default function ProviderReviewsPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      {/* Banner */}
       <div className="relative pt-24 pb-20 px-6 md:px-8 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -inset-3 blur-xs">
@@ -238,7 +201,7 @@ export default function ProviderReviewsPage() {
               レビュー
             </p>
             <h1 className="text-4xl md:text-6xl text-white tracking-tight mb-4 leading-none font-bold">
-              {isLoading ? "Loading…" : (provider?.name ?? "Reviews")}
+              {isLoading ? "Loading…" : provider?.name ?? "Reviews"}
             </h1>
             <p className="text-[#f0e6d7] text-[10px] uppercase tracking-[0.35em]">
               Customer Reviews &amp; Ratings
@@ -255,12 +218,15 @@ export default function ProviderReviewsPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 md:px-8 -mt-10 pb-24">
-        {/* Provider info card */}
         <div className="z-20 relative bg-card-bg border border-border shadow-sm p-6 mb-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           {isLoading ? (
-            <p className="text-muted text-sm uppercase tracking-wider">Loading provider…</p>
+            <p className="text-muted text-sm uppercase tracking-wider">
+              Loading provider…
+            </p>
           ) : error ? (
-            <p className="text-accent text-xs font-bold uppercase tracking-wider">{error}</p>
+            <p className="text-accent text-xs font-bold uppercase tracking-wider">
+              {error}
+            </p>
           ) : provider ? (
             <>
               <div className="space-y-1">
@@ -301,9 +267,7 @@ export default function ProviderReviewsPage() {
             </>
           ) : null}
         </div>
-        
 
-        {/* Reviews section */}
         <div className="mb-6 space-y-4 md:flex-row md:items-end md:justify-between">
           <div className="flex items-center gap-4">
             <h3 className="text-xs uppercase tracking-[0.3em] text-muted font-semibold">
@@ -327,12 +291,16 @@ export default function ProviderReviewsPage() {
           </div>
         ) : error ? (
           <div className="bg-card-bg border border-border p-6">
-            <p className="text-accent text-xs font-bold uppercase tracking-wider">{error}</p>
+            <p className="text-accent text-xs font-bold uppercase tracking-wider">
+              {error}
+            </p>
           </div>
         ) : reviews.length === 0 ? (
           <div className="bg-card-bg border border-border p-12 flex flex-col items-center justify-center gap-4 text-center">
             <p className="text-4xl text-muted/30">★</p>
-            <p className="text-sm text-muted uppercase tracking-[0.2em]">No reviews yet</p>
+            <p className="text-sm text-muted uppercase tracking-[0.2em]">
+              No reviews yet
+            </p>
             <p className="text-xs text-muted/60 max-w-xs">
               Complete a booking with this provider and share your experience.
             </p>
@@ -347,11 +315,7 @@ export default function ProviderReviewsPage() {
             {sortedReviews.map((review, index) => (
               <ReviewCard
                 key={review._id ?? index}
-                userName={
-                  review.user?.name ||
-                  review.user?.email ||
-                  "Anonymous"
-                }
+                userName={review.user?.name || review.user?.email || "Anonymous"}
                 rating={review.rating}
                 comment={review.comment}
                 createdAt={review.createdAt}
