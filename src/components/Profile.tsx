@@ -75,6 +75,22 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
               <p className="text-foreground mt-1">{field.value}</p>
             </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-2 mb-6">
+        <h2 className="text-2xl font-bold text-foreground tracking-tight">Custom Information</h2>
+        <div className="w-10 h-0.5 bg-accent mt-3" />
+      </div>
+
+      <div className="space-y-4">
+        {customFields.map((field) => (
+          <div key={field.key} className="flex items-center justify-between p-4 bg-background rounded border border-border hover:border-accent/30 transition-colors">
+            <div className="flex-1">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
+              <p className="text-foreground mt-1">{field.value}</p>
+            </div>
             {field.key !== "createdAt" && (
               <button
                 onClick={() => handleDeleteClick(field.key)}
