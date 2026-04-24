@@ -8,6 +8,9 @@ interface ProfileData {
   email: string;
   tel: string;
   createdAt: string;
+  profile: {
+    fields: Array<{ key: string; value: string }>;
+  };
 }
 
 interface SelfProfileProps {
