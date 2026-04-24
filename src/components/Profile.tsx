@@ -81,7 +81,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
 
       <DeleteFieldModal
         isOpen={deleteModalOpen}
-        fieldName={fieldToDelete ? fields.find(f => f.key === fieldToDelete)?.label || fieldToDelete : ""}
+        fieldName={fieldToDelete ? fields.find((f) => f.key === fieldToDelete)?.label || fieldToDelete : ""}
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
         isDeleting={isDeleting}
