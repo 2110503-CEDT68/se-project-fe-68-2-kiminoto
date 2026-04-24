@@ -85,20 +85,27 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
       </div>
 
       <div className="space-y-4">
-        {customFields.map((field) => (
-          <div key={field.key} className="flex items-center justify-between p-4 bg-background rounded border border-border hover:border-accent/30 transition-colors">
-            <div className="flex-1">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
-              <p className="text-foreground mt-1">{field.value}</p>
-            </div>
-            <button
-              onClick={() => handleDeleteClick(field.key)}
-              className="ml-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 font-semibold"
-            >
-              Delete
-            </button>
+        {customFields.length === 0 ? (
+          <div className="p-12 flex flex-col items-center justify-center gap-4 text-center">
+            <p className="text-sm text-muted uppercase tracking-[0.2em]">No custom fields yet</p>
+            <div className="text-xs text-muted/60 max-w-xs">You don't have any custom fields! Maybe try adding one to show who you are?</div>
           </div>
-        ))}
+        ) : (
+          customFields.map((field) => (
+            <div key={field.key} className="flex items-center justify-between p-4 bg-background rounded border border-border hover:border-accent/30 transition-colors">
+              <div className="flex-1">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
+                <p className="text-foreground mt-1">{field.value}</p>
+              </div>
+              <button
+                onClick={() => handleDeleteClick(field.key)}
+                className="ml-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 font-semibold"
+              >
+                Delete
+              </button>
+            </div>
+          ))
+        )}
       </div>
 
       <DeleteFieldModal
