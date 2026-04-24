@@ -91,14 +91,12 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
               <p className="text-foreground mt-1">{field.value}</p>
             </div>
-            {field.key !== "createdAt" && (
-              <button
-                onClick={() => handleDeleteClick(field.key)}
-                className="ml-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 font-semibold"
-              >
-                Delete
-              </button>
-            )}
+            <button
+              onClick={() => handleDeleteClick(field.key)}
+              className="ml-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 font-semibold"
+            >
+              Delete
+            </button>
           </div>
         ))}
       </div>
