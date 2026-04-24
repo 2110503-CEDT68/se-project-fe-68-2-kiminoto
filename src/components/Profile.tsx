@@ -15,7 +15,8 @@ interface ProfileData {
 
 interface SelfProfileProps {
   profile: ProfileData;
-  onDeleteField: (field: keyof ProfileData) => Promise<void>;
+  // TODO: Check if there's a better way instead of allowing all strings?
+  onDeleteField: (field: keyof ProfileData | string) => Promise<void>;
 }
 
 export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps) {
