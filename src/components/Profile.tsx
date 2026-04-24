@@ -89,6 +89,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
           <div className="p-12 flex flex-col items-center justify-center gap-4 text-center">
             <p className="text-sm text-muted uppercase tracking-[0.2em]">No custom fields yet</p>
             <div className="text-xs text-muted/60 max-w-xs">You don't have any custom fields! Maybe try adding one to show who you are?</div>
+            {/* TODO: Add an "Add" button and its modal. */}
           </div>
         ) : (
           customFields.map((field) => (
@@ -97,6 +98,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
                 <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
                 <p className="text-foreground mt-1">{field.value}</p>
               </div>
+              {/* TODO: Add an "Edit" button and its modal. */}
               <button
                 onClick={() => handleDeleteClick(field.key)}
                 className="ml-4 px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200 font-semibold"
