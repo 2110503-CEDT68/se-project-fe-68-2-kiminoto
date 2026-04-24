@@ -45,11 +45,11 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
     setFieldToDelete(null);
   };
 
-  const fields: { key: keyof ProfileData; label: string; value: string }[] = [
-    { key: "name", label: "Name", value: profile.name },
-    { key: "email", label: "Email", value: profile.email },
-    { key: "tel", label: "Telephone", value: profile.tel },
-    { key: "createdAt", label: "Member Since", value: new Date(profile.createdAt).toLocaleDateString() },
+  const fields: { key: keyof ProfileData; label: string; value: string; isCustom: boolean }[] = [
+    { key: "name", label: "Name", value: profile.name, isCustom: false },
+    { key: "email", label: "Email", value: profile.email, isCustom: false },
+    { key: "tel", label: "Telephone", value: profile.tel, isCustom: false },
+    { key: "createdAt", label: "Member Since", value: new Date(profile.createdAt).toLocaleDateString(), isCustom: false },
   ];
 
   return (
