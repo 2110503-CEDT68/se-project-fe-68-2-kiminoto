@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { TextField } from "@mui/material";
+import { TextField, Checkbox, FormControlLabel } from "@mui/material";
 import Link from "next/link";
 import userSignUp from "@/libs/userSignUp";
 
@@ -26,6 +26,7 @@ export default function SignUpPage() {
   const [tel, setTel] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isConsentChecked, setIsConsentChecked] = useState(false);
 
   const callbackUrl = searchParams.get("callbackUrl") || "/";
 
@@ -132,9 +133,31 @@ export default function SignUpPage() {
 
           {error ? <p className="text-xs text-red-700 tracking-wide">{error}</p> : null}
 
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isConsentChecked}
+                onChange={(e) => setIsConsentChecked(e.target.checked)}
+                sx={{
+                  color: "#5a4a3a",
+                  "&.Mui-checked": { color: "#b42828" },
+                }}
+              />
+            }
+            label={
+              <span className="text-sm text-muted">
+                I have read and agree to the{" "}
+                <Link href="/privacy-policy" className="text-accent hover:underline">
+                  Privacy Policy
+                </Link>
+              </span>
+            }
+            sx={{ marginTop: "4px", marginBottom: "8px" }}
+          />
+
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || !isConsentChecked}
             className="mt-2 w-full py-3 bg-accent text-white tracking-widest text-sm font-semibold uppercase hover:opacity-90 transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {isSubmitting ? "Creating Account..." : "Create Account"}
