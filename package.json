@@ -21,7 +21,7 @@
     "mongoose": "^9.3.1",
     "next": "15.4.8",
     "next-auth": "^4.24.13",
-    "postcss": "^8.5.8",
+    "postcss": "^8.5.10",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-redux": "^9.2.0",
@@ -43,5 +43,9 @@
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5"
+  },
+  "overrides": {
+    "uuid": "^14.0.0",
+    "yaml": "^2.8.3"
   }
 }
