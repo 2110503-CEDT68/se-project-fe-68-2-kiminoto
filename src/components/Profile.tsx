@@ -55,6 +55,10 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
     { key: "createdAt", label: "Member Since", value: new Date(profile.createdAt).toLocaleDateString(), isCustom: false },
   ];
 
+  const customFields: { key: string; label: string; value: string; isCustom: boolean }[] = profile.profile.fields.map((field) => {
+    return { key: field.key, label: field.key, value: field.value, isCustom: true };
+  });
+
   return (
     <div className="bg-card-bg border border-border shadow-sm p-6 w-full">
       <div className="mb-6">
