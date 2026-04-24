@@ -45,7 +45,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
     setFieldToDelete(null);
   };
 
-  const fields: { key: keyof ProfileData; label: string; value: string; isCustom: boolean }[] = [
+  const mandatoryFields: { key: keyof ProfileData; label: string; value: string; isCustom: boolean }[] = [
     { key: "name", label: "Name", value: profile.name, isCustom: false },
     { key: "email", label: "Email", value: profile.email, isCustom: false },
     { key: "tel", label: "Telephone", value: profile.tel, isCustom: false },
@@ -61,7 +61,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
       </div>
 
       <div className="space-y-4">
-        {fields.map((field) => (
+        {mandatoryFields.map((field) => (
           <div key={field.key} className="flex items-center justify-between p-4 bg-background rounded border border-border hover:border-accent/30 transition-colors">
             <div className="flex-1">
               <span className="text-[10px] uppercase tracking-[0.2em] text-muted font-semibold">{field.label}</span>
@@ -81,7 +81,7 @@ export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps
 
       <DeleteFieldModal
         isOpen={deleteModalOpen}
-        fieldName={fieldToDelete ? fields.find((f) => f.key === fieldToDelete)?.label || fieldToDelete : ""}
+        fieldName={fieldToDelete ? mandatoryFields.find((f) => f.key === fieldToDelete)?.label || fieldToDelete : ""}
         onClose={handleCloseModal}
         onConfirm={handleConfirmDelete}
         isDeleting={isDeleting}
