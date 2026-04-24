@@ -37,7 +37,24 @@ export default function ProfilePage() {
     // Implement delete functionality here
     // This should call an API endpoint to delete the field
     console.log("Deleting field:", field);
-    // For now, just remove it from the local state
+    const target = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/profile/fields`;
+    await fetch(target, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${session?.user?.token}`,
+        "Content-Type": "application/json",
+      },
+      // FIXME: Body with DELETE???
+      // Technically it's allowed, according to Google AI
+      // Overview, but it also said that it may break on certain apps,
+      // Let's hope it doesn't break on our presentation...
+      body: JSON.stringify({ key: field }),
+    });
+
+    // remove it from the local state
+    const index = profile.profile.fields.map((e: { key: string; value: string }) => e.key);
+    profile.profile.fields.splice(index, 1);
+
     if (profile) {
       setProfile({
         ...profile,
@@ -92,12 +109,7 @@ export default function ProfilePage() {
           <div className="w-10 h-0.5 bg-accent mt-4" />
         </div>
 
-        {profile && (
-          <SelfProfile
-            profile={profile}
-            onDeleteField={handleDeleteField}
-          />
-        )}
+        {profile && <SelfProfile profile={profile} onDeleteField={handleDeleteField} />}
       </div>
     </main>
   );
