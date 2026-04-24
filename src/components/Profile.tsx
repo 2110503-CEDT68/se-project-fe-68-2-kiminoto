@@ -21,10 +21,10 @@ interface SelfProfileProps {
 
 export default function SelfProfile({ profile, onDeleteField }: SelfProfileProps) {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [fieldToDelete, setFieldToDelete] = useState<keyof ProfileData | null>(null);
+  const [fieldToDelete, setFieldToDelete] = useState<keyof ProfileData | string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDeleteClick = (field: keyof ProfileData) => {
+  const handleDeleteClick = (field: keyof ProfileData | string) => {
     setFieldToDelete(field);
     setDeleteModalOpen(true);
   };
