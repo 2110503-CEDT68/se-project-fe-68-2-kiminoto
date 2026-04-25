@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import DeleteFieldModal from "./DeleteFieldModal";
+import ProfilePictureCard from "./ProfilePictureCard";
 
 interface CustomProfileField {
   key: string;
@@ -13,6 +14,7 @@ interface ProfileData {
   email: string;
   tel: string;
   createdAt: string;
+  picture?: string;
   profile?: {
     fields?: CustomProfileField[];
   };
@@ -20,12 +22,14 @@ interface ProfileData {
 
 interface SelfProfileProps {
   profile: ProfileData;
+  token?: string;
   onEditProfileField: (key: string, value: string) => Promise<void>;
   onDeleteField: (key: string) => Promise<void>;
 }
 
 export default function SelfProfile({
   profile,
+  token,
   onEditProfileField,
   onDeleteField,
 }: SelfProfileProps) {
@@ -147,6 +151,15 @@ export default function SelfProfile({
 
   return (
     <div className="bg-card-bg border border-border shadow-sm p-6 w-full">
+      <div className="mb-8">
+        <ProfilePictureCard
+          picture={profile.picture}
+          token={token}
+          name={profile.name}
+          email={profile.email}
+        />
+      </div>
+
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <p className="text-[10px] uppercase tracking-[0.3em] text-muted font-semibold mb-2">

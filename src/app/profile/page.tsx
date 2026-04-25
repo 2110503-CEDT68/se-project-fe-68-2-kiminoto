@@ -6,6 +6,7 @@ import getUserProfile from "@/libs/getUserProfile";
 import editUserProfile from "@/libs/editUserProfile";
 import deleteUserProfileField from "@/libs/deleteUserProfile";
 import SelfProfile from "@/components/Profile";
+import ProfilePictureUpload from "@/components/ProfilePictureUpload";
 
 interface CustomProfileField {
   key: string;
@@ -17,10 +18,14 @@ interface ProfileData {
   email: string;
   tel: string;
   createdAt: string;
+  picture?: string;
   profile?: {
     fields?: CustomProfileField[];
   };
 }
+
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
 
 export default function ProfilePage() {
   const { data: session, status } = useSession();
@@ -36,7 +41,13 @@ export default function ProfilePage() {
       setError(null);
 
       const profileData = await getUserProfile(session.user.token);
-      setProfile(profileData.data);
+
+      // Point picture at the avatar endpoint.
+      // ProfilePictureCard uses onError to fall back to initials if no avatar exists.
+      setProfile({
+        ...profileData.data,
+        picture: `${BACKEND_URL}/api/v1/profile/avatar`,
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load profile");
     } finally {
@@ -78,6 +89,10 @@ export default function ProfilePage() {
     });
 
     setProfile(updatedProfile.data);
+  };
+
+  const handleUploadSuccess = async () => {
+    await loadProfile();
   };
 
   if (status === "unauthenticated") {
@@ -135,11 +150,19 @@ export default function ProfilePage() {
         </div>
 
         {profile && (
-          <SelfProfile
-            profile={profile}
-            onEditProfileField={handleEditProfileField}
-            onDeleteField={handleDeleteField}
-          />
+          <div className="space-y-6">
+            <ProfilePictureUpload
+              token={session?.user?.token || ""}
+              currentPicture={profile.picture}
+              onUploadSuccess={handleUploadSuccess}
+            />
+            <SelfProfile
+              profile={profile}
+              token={session?.user?.token || ""}
+              onEditProfileField={handleEditProfileField}
+              onDeleteField={handleDeleteField}
+            />
+          </div>
         )}
       </div>
     </main>
