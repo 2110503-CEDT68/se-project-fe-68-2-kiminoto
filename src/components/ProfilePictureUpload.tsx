@@ -122,7 +122,7 @@ export default function ProfilePictureUpload({
           )}
 
           <p className="text-xs text-muted">
-            Supported formats: JPG, PNG, GIF (Max size: 5MB)
+            Supported formats: JPG, PNG, GIF (Max size: 2MB)
           </p>
         </div>
       </div>
