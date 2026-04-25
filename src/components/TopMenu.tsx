@@ -14,14 +14,25 @@ export default function TopMenu() {
                 <div className="flex items-center gap-4">
                     <div className="flex-1 flex items-center">
                         {session ? (
-                            <Link href="/signout" className="group flex flex-col cursor-pointer hover:opacity-80 transition-opacity">
-                                <span className="text-xs uppercase tracking-widest text-red-400/80 group-hover:text-red-300 transition-colors font-semibold">
-                                    Sign Out
-                                </span>
-                                <span className="text-sm tracking-wide font-semibold text-white">
-                                    {session.user?.name || session.user?.email}
-                                </span>
-                            </Link>
+                            <div className="flex flex-col">
+                                <Link
+                                    href="/signout"
+                                    className="group flex flex-col cursor-pointer hover:opacity-80 transition-opacity"
+                                >
+                                    <span className="text-xs uppercase tracking-widest text-red-400/80 group-hover:text-red-300 transition-colors font-semibold">
+                                        Sign Out
+                                    </span>
+                                </Link>
+
+                                <Link
+                                    href="/profile"
+                                    className="group flex flex-col cursor-pointer hover:opacity-80 transition-opacity"
+                                >
+                                    <span className="text-sm tracking-wide font-semibold text-white">
+                                        {session.user?.name || session.user?.email}
+                                    </span>
+                                </Link>
+                            </div>
                         ) : (
                             <div className="flex flex-col">
                                 <span className="text-xs uppercase tracking-widest text-white/50">
@@ -40,12 +51,19 @@ export default function TopMenu() {
                         )}
                     </div>
                 </div>
+
                 <div className="flex items-center gap-2 md:gap-4">
                     <TopMenuItem title="My Booking" pageRef="/mybooking" />
                     <TopMenuItem title="Booking" pageRef="/booking" />
                     <TopMenuItem title="Providers" pageRef="/providers" />
                     <Link href="/">
-                        <Image className="border border-border" src="/img/logo.jpg" alt="Das Buch Logo" width={40} height={40} />
+                        <Image
+                            className="border border-border"
+                            src="/img/logo.jpg"
+                            alt="Das Buch Logo"
+                            width={40}
+                            height={40}
+                        />
                     </Link>
                 </div>
             </div>
