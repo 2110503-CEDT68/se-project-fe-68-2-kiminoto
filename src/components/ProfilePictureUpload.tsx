@@ -29,10 +29,10 @@ export default function ProfilePictureUpload({
       return;
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024; // 5MB
+    // Validate file size (max 2MB)
+    const maxSize = 2 * 1024 * 1024; // 2MB
     if (file.size > maxSize) {
-      setError("File size must be less than 5MB");
+      setError("File size must be less than 2MB");
       return;
     }
 
