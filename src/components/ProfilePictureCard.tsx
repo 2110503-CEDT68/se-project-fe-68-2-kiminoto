@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-
-const avatarCache = new Map<string, string>();
+import { resolveAvatarSrc } from "@/libs/avatar";
 
 interface ProfilePictureCardProps {
   picture?: string;
@@ -24,50 +23,25 @@ export default function ProfilePictureCard({
       return;
     }
 
-    if (!token) {
-      setImgSrc(null);
-      return;
-    }
-
-    const cacheKey = `${picture}::${token}`;
-    const cached = avatarCache.get(cacheKey);
-    if (cached) {
-      setImgSrc(cached);
-      return;
-    }
-
-    let objectUrl: string | null = null;
-
     const fetchAvatar = async () => {
-      try {
-        const res = await fetch(picture, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) {
-          // If 401/403, maybe the token is invalid or not needed.
-          // Try using the URL directly in the img tag as a fallback.
-          setImgSrc(picture);
-          return;
+      const nextSrc = await resolveAvatarSrc(picture, token);
+      setImgSrc((current) => {
+        if (current === nextSrc) {
+          return current;
         }
-
-        const blob = await res.blob();
-        objectUrl = URL.createObjectURL(blob);
-        avatarCache.set(cacheKey, objectUrl);
-        setImgSrc(objectUrl);
-      } catch (error) {
-        // This catch block handles "NetworkError" (CORS or server down).
-        // If it's a CORS issue with the Authorization header, 
-        // using the URL directly might still work if the image is public.
-        setImgSrc(picture);
-      }
+        return nextSrc;
+      });
     };
 
-    fetchAvatar();
+    void fetchAvatar();
 
-    // Cleanup blob URL when component unmounts or picture/token changes
     return () => {
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      setImgSrc((current) => {
+        if (current && current === picture) {
+          return null;
+        }
+        return current;
+      });
     };
   }, [picture, token]);
 
@@ -89,7 +63,9 @@ export default function ProfilePictureCard({
             src={imgSrc}
             alt={name || "Profile picture"}
             className="w-40 h-40 rounded-full object-cover border-2 border-border shadow-sm"
-            onError={() => setImgSrc(null)}
+            onError={() => {
+              setImgSrc((current) => (current === imgSrc ? null : current));
+            }}
           />
         ) : (
           <div className="w-40 h-40 rounded-full bg-foreground flex items-center justify-center border-2 border-border shadow-sm">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { resolveAvatarSrc } from "@/libs/avatar";
 import uploadProfilePicture from "@/libs/uploadProfilePicture";
 
 interface ProfilePictureUploadProps {
@@ -21,40 +22,17 @@ export default function ProfilePictureUpload({
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!currentPicture || !token) {
+    if (!currentPicture) {
       setAvatarSrc(null);
       return;
     }
 
-    let objectUrl: string | null = null;
-
     const fetchCurrentAvatar = async () => {
-      try {
-        const res = await fetch(currentPicture, {
-          headers: { Authorization: `Bearer ${token}` },
-          cache: "no-store",
-        });
-
-        if (!res.ok) {
-          // Fallback to direct URL if authenticated fetch fails
-          setAvatarSrc(currentPicture);
-          return;
-        }
-
-        const blob = await res.blob();
-        objectUrl = URL.createObjectURL(blob);
-        setAvatarSrc(objectUrl);
-      } catch {
-        // Fallback to direct URL on network error (CORS)
-        setAvatarSrc(currentPicture);
-      }
+      const nextSrc = await resolveAvatarSrc(currentPicture, token);
+      setAvatarSrc(nextSrc);
     };
 
-    fetchCurrentAvatar();
-
-    return () => {
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
+    void fetchCurrentAvatar();
   }, [currentPicture, token, success]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {

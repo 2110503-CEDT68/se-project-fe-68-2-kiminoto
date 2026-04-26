@@ -3,9 +3,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Rating } from "@mui/material";
 import UpvoteDownvote from "./UpvoteDownvote";
-
 import { BACKEND_URL } from "@/libs/config";
-const avatarCache = new Map<string, string>();
+import { resolveAvatarSrc } from "@/libs/avatar";
 
 interface ReviewCardProps {
   userId?: string;
@@ -43,45 +42,17 @@ export default function ReviewCard({
     const pictureUrl =
       userPicture || (userId ? `${BACKEND_URL}/api/v1/profile/avatar/${userId}` : "");
 
-    if (!pictureUrl || !token) {
+    if (!pictureUrl) {
       setResolvedPicture(null);
       return;
     }
 
-    const cacheKey = `${pictureUrl}::${token}`;
-    const cached = avatarCache.get(cacheKey);
-    if (cached) {
-      setResolvedPicture(cached);
-      return;
-    }
-
-    let objectUrl: string | null = null;
-
     const fetchAvatar = async () => {
-      try {
-        const res = await fetch(pictureUrl, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (!res.ok) {
-          setResolvedPicture(pictureUrl);
-          return;
-        }
-
-        const blob = await res.blob();
-        objectUrl = URL.createObjectURL(blob);
-        avatarCache.set(cacheKey, objectUrl);
-        setResolvedPicture(objectUrl);
-      } catch {
-        setResolvedPicture(pictureUrl);
-      }
+      const nextSrc = await resolveAvatarSrc(pictureUrl, token);
+      setResolvedPicture(nextSrc);
     };
 
-    fetchAvatar();
-
-    return () => {
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
+    void fetchAvatar();
   }, [token, userId, userPicture]);
 
   const profileHref = userId
@@ -111,7 +82,11 @@ export default function ReviewCard({
                 src={resolvedPicture}
                 alt={userName}
                 className="w-full h-full object-cover"
-                onError={() => setResolvedPicture(null)}
+                onError={() => {
+                  setResolvedPicture((current) =>
+                    current === resolvedPicture ? null : current
+                  );
+                }}
               />
             ) : (
               <span className="text-xs font-bold text-foreground tracking-[0.15em]">
