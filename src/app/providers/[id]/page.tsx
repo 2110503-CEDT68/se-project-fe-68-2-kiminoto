@@ -315,7 +315,15 @@ export default function ProviderReviewsPage() {
             {sortedReviews.map((review, index) => (
               <ReviewCard
                 key={review._id ?? index}
+                userId={review.user?._id}
+                token={session?.user?.token}
                 userName={review.user?.name || review.user?.email || "Anonymous"}
+                userEmail={review.user?.email}
+                userPicture={
+                  review.user?.picture ??
+                  review.user?.profilePicture ??
+                  review.user?.avatar
+                }
                 rating={review.rating}
                 comment={review.comment}
                 createdAt={review.createdAt}

@@ -1,9 +1,19 @@
 "use client";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Rating } from "@mui/material";
 import UpvoteDownvote from "./UpvoteDownvote";
 
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+const avatarCache = new Map<string, string>();
+
 interface ReviewCardProps {
+  userId?: string;
+  token?: string;
   userName: string;
+  userEmail?: string;
+  userPicture?: string;
   rating: number;
   comment: string;
   createdAt: string;
@@ -14,7 +24,11 @@ interface ReviewCardProps {
 }
 
 export default function ReviewCard({
+  userId,
+  token,
   userName,
+  userEmail,
+  userPicture,
   rating,
   comment,
   createdAt,
@@ -24,6 +38,62 @@ export default function ReviewCard({
   disableVote = false,
 }: ReviewCardProps) {
   const timeAgo = getRelativeTime(createdAt);
+  const [resolvedPicture, setResolvedPicture] = useState<string | null>(null);
+
+  useEffect(() => {
+    const pictureUrl =
+      userPicture || (userId ? `${BACKEND_URL}/api/v1/profile/avatar/${userId}` : "");
+
+    if (!pictureUrl || !token) {
+      setResolvedPicture(null);
+      return;
+    }
+
+    const cacheKey = `${pictureUrl}::${token}`;
+    const cached = avatarCache.get(cacheKey);
+    if (cached) {
+      setResolvedPicture(cached);
+      return;
+    }
+
+    let objectUrl: string | null = null;
+
+    const fetchAvatar = async () => {
+      try {
+        const res = await fetch(pictureUrl, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!res.ok) {
+          setResolvedPicture(null);
+          return;
+        }
+
+        const blob = await res.blob();
+        objectUrl = URL.createObjectURL(blob);
+        avatarCache.set(cacheKey, objectUrl);
+        setResolvedPicture(objectUrl);
+      } catch {
+        setResolvedPicture(null);
+      }
+    };
+
+    fetchAvatar();
+
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [token, userId, userPicture]);
+
+  const profileHref = userId
+    ? {
+        pathname: `/profile/${userId}`,
+        query: {
+          name: userName,
+          email: userEmail ?? "",
+        },
+      }
+    : null;
 
   return (
     <div className="bg-card-bg border border-border p-6 flex items-start gap-5 group hover:shadow-md transition-shadow duration-300">
@@ -36,18 +106,46 @@ export default function ReviewCard({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 mb-2 flex-wrap">
-          <span className="text-sm font-bold text-foreground tracking-tight">
-            {userName}
-          </span>
-          <span className="text-[10px] uppercase tracking-[0.2em] text-muted/60">
-            •
-          </span>
-          <span
-            className="text-[10px] uppercase tracking-[0.2em] text-muted/60"
-            title={new Date(createdAt).toLocaleString()}
-          >
-            {timeAgo}
-          </span>
+          <div className="w-11 h-11 rounded-full overflow-hidden border border-border bg-[#f5efe6] flex items-center justify-center shrink-0">
+            {resolvedPicture ? (
+              <img
+                src={resolvedPicture}
+                alt={userName}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <span className="text-xs font-bold text-foreground tracking-[0.15em]">
+                {getInitials(userName)}
+              </span>
+            )}
+          </div>
+
+          <div className="min-w-0">
+            {profileHref ? (
+              <Link
+                href={profileHref}
+                className="text-sm font-bold text-foreground tracking-tight hover:text-accent transition-colors"
+              >
+                {userName}
+              </Link>
+            ) : (
+              <span className="text-sm font-bold text-foreground tracking-tight">
+                {userName}
+              </span>
+            )}
+
+            <div className="flex items-center gap-2 flex-wrap mt-1">
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted/60">
+                •
+              </span>
+              <span
+                className="text-[10px] uppercase tracking-[0.2em] text-muted/60"
+                title={new Date(createdAt).toLocaleString()}
+              >
+                {timeAgo}
+              </span>
+            </div>
+          </div>
         </div>
 
         <Rating
@@ -66,6 +164,18 @@ export default function ReviewCard({
       </div>
     </div>
   );
+}
+
+function getInitials(fullName: string | undefined): string {
+  if (!fullName) return "?";
+
+  return fullName
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
 }
 
 function getRelativeTime(isoDate: string): string {

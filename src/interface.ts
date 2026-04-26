@@ -21,9 +21,18 @@ export interface VenueJson {
 
 export type VoteState = "upvote" | "downvote" | null;
 
+export interface ReviewUser {
+  _id?: string;
+  name?: string;
+  email?: string;
+  picture?: string;
+  profilePicture?: string;
+  avatar?: string;
+}
+
 export interface Review {
   _id: string;
-  user?: { name?: string; email?: string };
+  user?: ReviewUser;
   rating: number;
   comment: string;
   createdAt: string;
@@ -33,7 +42,7 @@ export interface Review {
 
 export interface ProviderReviewApiItem {
   _id: string;
-  user?: { _id?: string; name?: string; email?: string };
+  user?: ReviewUser;
   review?: {
     rating?: number;
     comment?: string;

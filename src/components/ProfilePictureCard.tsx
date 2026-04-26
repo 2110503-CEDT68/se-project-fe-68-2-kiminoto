@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
 
+const avatarCache = new Map<string, string>();
+
 interface ProfilePictureCardProps {
   picture?: string;
   token?: string;
@@ -17,7 +19,22 @@ export default function ProfilePictureCard({
   const [imgSrc, setImgSrc] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!picture || !token) return;
+    if (!picture) {
+      setImgSrc(null);
+      return;
+    }
+
+    if (!token) {
+      setImgSrc(null);
+      return;
+    }
+
+    const cacheKey = `${picture}::${token}`;
+    const cached = avatarCache.get(cacheKey);
+    if (cached) {
+      setImgSrc(cached);
+      return;
+    }
 
     let objectUrl: string | null = null;
 
@@ -25,7 +42,6 @@ export default function ProfilePictureCard({
       try {
         const res = await fetch(picture, {
           headers: { Authorization: `Bearer ${token}` },
-          cache: "no-store",
         });
 
         if (!res.ok) {
@@ -35,6 +51,7 @@ export default function ProfilePictureCard({
 
         const blob = await res.blob();
         objectUrl = URL.createObjectURL(blob);
+        avatarCache.set(cacheKey, objectUrl);
         setImgSrc(objectUrl);
       } catch {
         setImgSrc(null);

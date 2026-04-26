@@ -13,6 +13,7 @@ type BackendUser = {
 
 export const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === "development",
+  secret: process.env.NEXTAUTH_SECRET ?? process.env.AUTH_SECRET,
     providers: [
         CredentialsProvider({
           // The name to display on the sign in form (e.g. "Sign in with...")

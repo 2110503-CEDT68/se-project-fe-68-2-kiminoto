@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import uploadProfilePicture from "@/libs/uploadProfilePicture";
 
 interface ProfilePictureUploadProps {
@@ -17,7 +17,43 @@ export default function ProfilePictureUpload({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!currentPicture || !token) {
+      setAvatarSrc(null);
+      return;
+    }
+
+    let objectUrl: string | null = null;
+
+    const fetchCurrentAvatar = async () => {
+      try {
+        const res = await fetch(currentPicture, {
+          headers: { Authorization: `Bearer ${token}` },
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          setAvatarSrc(null);
+          return;
+        }
+
+        const blob = await res.blob();
+        objectUrl = URL.createObjectURL(blob);
+        setAvatarSrc(objectUrl);
+      } catch {
+        setAvatarSrc(null);
+      }
+    };
+
+    fetchCurrentAvatar();
+
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [currentPicture, token, success]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -45,7 +81,7 @@ export default function ProfilePictureUpload({
       setError(null);
       setSuccess(false);
 
-      const response = await uploadProfilePicture(token, file);
+      await uploadProfilePicture(token, file);
       
       // Assuming the backend returns the picture URL in the response
       //const pictureUrl = response.data?.profilePicture || response.data?.picture;
@@ -78,10 +114,10 @@ export default function ProfilePictureUpload({
           Profile Picture
         </h3>
 
-        {currentPicture && (
+        {avatarSrc && (
           <div className="flex justify-center">
             <img
-              src={currentPicture}
+              src={avatarSrc}
               alt="Current profile picture"
               className="w-32 h-32 rounded-full object-cover border-4 border-blue-200"
             />

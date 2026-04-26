@@ -46,7 +46,7 @@ export default function ProfilePage() {
       // ProfilePictureCard uses onError to fall back to initials if no avatar exists.
       setProfile({
         ...profileData.data,
-        picture: `${BACKEND_URL}/api/v1/profile/avatar`,
+        picture: `${BACKEND_URL}/api/v1/profile/avatar?t=${Date.now()}`,
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load profile");
@@ -76,7 +76,10 @@ export default function ProfilePage() {
       value,
     });
 
-    setProfile(updatedProfile.data);
+    setProfile((prev) => ({
+      ...updatedProfile.data,
+      picture: prev?.picture,
+    }));
   };
 
   const handleDeleteField = async (key: string) => {
@@ -88,7 +91,10 @@ export default function ProfilePage() {
       key,
     });
 
-    setProfile(updatedProfile.data);
+    setProfile((prev) => ({
+      ...updatedProfile.data,
+      picture: prev?.picture,
+    }));
   };
 
   const handleUploadSuccess = async () => {
