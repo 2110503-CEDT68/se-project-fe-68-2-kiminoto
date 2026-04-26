@@ -1,10 +1,10 @@
+import { BACKEND_URL } from "./config";
+
 export default async function uploadProfilePicture(
   token: string,
   file: File
 ) {
-  const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL ??
-    "https://backend-paopaopao.vercel.app";
+  const backendUrl = BACKEND_URL;
 
   // Convert the File to a base64 string
   const base64 = await new Promise<string>((resolve, reject) => {

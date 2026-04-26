@@ -1,5 +1,7 @@
+import { BACKEND_URL } from "./config";
+
 export default async function getUserProfile(token: string) {
-    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+    const backendUrl = BACKEND_URL;
 
     const response = await fetch(`${backendUrl}/api/v1/auth/me`, {
         method: "GET",

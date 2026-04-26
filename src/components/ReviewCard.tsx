@@ -4,8 +4,7 @@ import Link from "next/link";
 import { Rating } from "@mui/material";
 import UpvoteDownvote from "./UpvoteDownvote";
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+import { BACKEND_URL } from "@/libs/config";
 const avatarCache = new Map<string, string>();
 
 interface ReviewCardProps {
@@ -65,7 +64,7 @@ export default function ReviewCard({
         });
 
         if (!res.ok) {
-          setResolvedPicture(null);
+          setResolvedPicture(pictureUrl);
           return;
         }
 
@@ -74,7 +73,7 @@ export default function ReviewCard({
         avatarCache.set(cacheKey, objectUrl);
         setResolvedPicture(objectUrl);
       } catch {
-        setResolvedPicture(null);
+        setResolvedPicture(pictureUrl);
       }
     };
 
@@ -112,6 +111,7 @@ export default function ReviewCard({
                 src={resolvedPicture}
                 alt={userName}
                 className="w-full h-full object-cover"
+                onError={() => setResolvedPicture(null)}
               />
             ) : (
               <span className="text-xs font-bold text-foreground tracking-[0.15em]">

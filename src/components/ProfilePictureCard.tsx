@@ -45,7 +45,9 @@ export default function ProfilePictureCard({
         });
 
         if (!res.ok) {
-          setImgSrc(null);
+          // If 401/403, maybe the token is invalid or not needed.
+          // Try using the URL directly in the img tag as a fallback.
+          setImgSrc(picture);
           return;
         }
 
@@ -53,8 +55,11 @@ export default function ProfilePictureCard({
         objectUrl = URL.createObjectURL(blob);
         avatarCache.set(cacheKey, objectUrl);
         setImgSrc(objectUrl);
-      } catch {
-        setImgSrc(null);
+      } catch (error) {
+        // This catch block handles "NetworkError" (CORS or server down).
+        // If it's a CORS issue with the Authorization header, 
+        // using the URL directly might still work if the image is public.
+        setImgSrc(picture);
       }
     };
 
@@ -84,6 +89,7 @@ export default function ProfilePictureCard({
             src={imgSrc}
             alt={name || "Profile picture"}
             className="w-40 h-40 rounded-full object-cover border-2 border-border shadow-sm"
+            onError={() => setImgSrc(null)}
           />
         ) : (
           <div className="w-40 h-40 rounded-full bg-foreground flex items-center justify-center border-2 border-border shadow-sm">

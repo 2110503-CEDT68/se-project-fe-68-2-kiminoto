@@ -36,7 +36,8 @@ export default function ProfilePictureUpload({
         });
 
         if (!res.ok) {
-          setAvatarSrc(null);
+          // Fallback to direct URL if authenticated fetch fails
+          setAvatarSrc(currentPicture);
           return;
         }
 
@@ -44,7 +45,8 @@ export default function ProfilePictureUpload({
         objectUrl = URL.createObjectURL(blob);
         setAvatarSrc(objectUrl);
       } catch {
-        setAvatarSrc(null);
+        // Fallback to direct URL on network error (CORS)
+        setAvatarSrc(currentPicture);
       }
     };
 
@@ -120,6 +122,7 @@ export default function ProfilePictureUpload({
               src={avatarSrc}
               alt="Current profile picture"
               className="w-32 h-32 rounded-full object-cover border-4 border-blue-200"
+              onError={() => setAvatarSrc(null)}
             />
           </div>
         )}

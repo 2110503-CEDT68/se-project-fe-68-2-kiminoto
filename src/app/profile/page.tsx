@@ -24,8 +24,7 @@ interface ProfileData {
   };
 }
 
-const BACKEND_URL =
-  process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+import { BACKEND_URL } from "@/libs/config";
 
 export default function ProfilePage() {
   const { data: session, status } = useSession();

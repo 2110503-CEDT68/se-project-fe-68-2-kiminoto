@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { useSession } from "next-auth/react";
 import SelfProfile, { ProfileData } from "@/components/Profile";
+import { BACKEND_URL } from "@/libs/config";
 
 function PublicProfileContent() {
   const params = useParams<{ id: string }>();
@@ -13,8 +14,7 @@ function PublicProfileContent() {
   const name = searchParams.get("name") || "Anonymous";
   const email = searchParams.get("email") || "";
 
-  const backendUrl =
-    process.env.NEXT_PUBLIC_BACKEND_URL ?? "https://backend-paopaopao.vercel.app";
+  const backendUrl = BACKEND_URL;
 
   const profile: ProfileData = {
     name,
