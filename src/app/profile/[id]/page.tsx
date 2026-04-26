@@ -1,10 +1,11 @@
 "use client";
 
 import { useParams, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { useSession } from "next-auth/react";
 import SelfProfile, { ProfileData } from "@/components/Profile";
 
-export default function PublicProfilePage() {
+function PublicProfileContent() {
   const params = useParams<{ id: string }>();
   const searchParams = useSearchParams();
   const { data: session } = useSession();
@@ -49,5 +50,13 @@ export default function PublicProfilePage() {
         />
       </div>
     </main>
+  );
+}
+
+export default function PublicProfilePage() {
+  return (
+    <Suspense>
+      <PublicProfileContent />
+    </Suspense>
   );
 }

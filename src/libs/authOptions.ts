@@ -26,7 +26,7 @@ export const authOptions: NextAuthOptions = {
             email: { label: "Email", type: "email", placeholder: "email"},
             password: { label: "Password",type: "password"}
           },
-          async authorize(credentials, _req) {
+          async authorize(credentials) {
             // Add logic here to look up the user from the credentials supplied
             if(!credentials) return null
 
@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
 
               // If you return null then an error will be displayed advising the user to check their details.
               return null
-            } catch (_error) {
+            } catch {
               return null
             }
           }
@@ -72,8 +72,8 @@ export const authOptions: NextAuthOptions = {
         }
         return token
         },
-        async session({session, token, user}) {
-            session.user = token as any
+        async session({session, token}) {
+            session.user = token as unknown as typeof session.user
             return session
         },
     } 

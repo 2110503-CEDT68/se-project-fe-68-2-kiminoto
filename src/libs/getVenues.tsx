@@ -1,4 +1,6 @@
-let cachedVenues: Promise<any> | null = null;
+import { VenueJson } from "@/interface";
+
+let cachedVenues: Promise<VenueJson> | null = null;
 
 export default function getVenues() {
     if (!cachedVenues) {

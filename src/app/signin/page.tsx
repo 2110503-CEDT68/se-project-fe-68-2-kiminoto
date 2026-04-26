@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TextField } from "@mui/material";
@@ -10,7 +10,7 @@ const fieldSx = { '& .MuiInput-underline:after': { borderBottomColor: '#b42828' 
 const labelStyle = { color: '#5a4a3a', fontFamily: 'Noto Serif JP, serif', textTransform: 'uppercase' as const, letterSpacing: '0.025em' };
 const inputStyle = { color: '#1a1208', fontFamily: 'Noto Serif JP, serif' };
 
-export default function SignInPage() {
+function SignInContent() {
   const { status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -106,5 +106,13 @@ export default function SignInPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignInContent />
+    </Suspense>
   );
 }

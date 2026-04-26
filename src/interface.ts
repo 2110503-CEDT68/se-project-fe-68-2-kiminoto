@@ -15,7 +15,7 @@ export interface VenueItem {
 export interface VenueJson {
   success: boolean;
   count: number;
-  pagination: Object;
+  pagination: object;
   data: VenueItem[];
 }
 

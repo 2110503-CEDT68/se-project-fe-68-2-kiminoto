@@ -26,7 +26,7 @@ export default async function UserLogin(userEmail: string, userPassword: string)
         cache: "no-store",
     });
 
-    const data = await response.json().catch(() => ({} as any));
+    const data = await response.json().catch(() => ({} as Record<string, unknown>));
 
     if (!response.ok) {
         throw new Error(typeof data?.message === "string" ? data.message : "Login failed");

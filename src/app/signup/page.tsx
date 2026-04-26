@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { TextField, Checkbox, FormControlLabel } from "@mui/material";
@@ -16,7 +16,7 @@ const labelStyle = {
 };
 const inputStyle = { color: "#1a1208", fontFamily: "Noto Serif JP, serif" };
 
-export default function SignUpPage() {
+function SignUpContent() {
   const { status } = useSession();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -172,5 +172,13 @@ export default function SignUpPage() {
         </form>
       </div>
     </main>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense>
+      <SignUpContent />
+    </Suspense>
   );
 }
