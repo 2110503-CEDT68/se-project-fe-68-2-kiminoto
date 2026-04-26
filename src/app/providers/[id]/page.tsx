@@ -317,7 +317,20 @@ export default function ProviderReviewsPage() {
                 key={review._id ?? index}
                 userId={review.user?._id}
                 token={session?.user?.token}
-                userName={review.user?.name || review.user?.email || "Anonymous"}
+                userName={
+                  (
+                    (review.user as {
+                      profile?: { fields?: Array<{ key?: string; value?: string }> };
+                    } | undefined)?.profile?.fields?.find(
+                      (field) =>
+                        field.key?.toLowerCase().replace(/[\s_-]/g, "") ===
+                        "displayname"
+                    )?.value ||
+                    review.user?.name ||
+                    review.user?.email ||
+                    "Anonymous"
+                  ).trim()
+                }
                 userEmail={review.user?.email}
                 userPicture={
                   review.user?.picture ??
