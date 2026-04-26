@@ -13,6 +13,24 @@ function PublicProfileContent() {
   const userId = params.id;
   const name = searchParams.get("name") || "Anonymous";
   const email = searchParams.get("email") || "";
+  const fieldsParam = searchParams.get("fields");
+
+  let customFields: Array<{ key: string; value: string }> = [];
+  if (fieldsParam) {
+    try {
+      const parsed = JSON.parse(fieldsParam);
+      if (Array.isArray(parsed)) {
+        customFields = parsed
+          .filter(
+            (field): field is { key: string; value: string } =>
+              typeof field?.key === "string" && typeof field?.value === "string"
+          )
+          .slice(0, 5);
+      }
+    } catch {
+      customFields = [];
+    }
+  }
 
   const backendUrl = BACKEND_URL;
 
@@ -22,7 +40,7 @@ function PublicProfileContent() {
     tel: "-",
     createdAt: new Date().toISOString(),
     picture: `${backendUrl}/api/v1/profile/avatar/${userId}`,
-    profile: { fields: [] },
+    profile: { fields: customFields },
   };
 
   return (

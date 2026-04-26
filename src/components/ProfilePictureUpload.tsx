@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { resolveAvatarSrc } from "@/libs/avatar";
 import uploadProfilePicture from "@/libs/uploadProfilePicture";
+import deleteProfilePicture from "@/libs/deleteProfilePicture";
 
 interface ProfilePictureUploadProps {
   token: string;
@@ -16,8 +17,9 @@ export default function ProfilePictureUpload({
   onUploadSuccess,
 }: ProfilePictureUploadProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [avatarSrc, setAvatarSrc] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -33,7 +35,7 @@ export default function ProfilePictureUpload({
     };
 
     void fetchCurrentAvatar();
-  }, [currentPicture, token, success]);
+  }, [currentPicture, token, successMessage]);
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -59,14 +61,14 @@ export default function ProfilePictureUpload({
     try {
       setIsLoading(true);
       setError(null);
-      setSuccess(false);
+      setSuccessMessage(null);
 
       await uploadProfilePicture(token, file);
       
       // Assuming the backend returns the picture URL in the response
       //const pictureUrl = response.data?.profilePicture || response.data?.picture;
       
-      setSuccess(true);
+      setSuccessMessage("Profile picture uploaded successfully!");
       onUploadSuccess?.();
       
       // Clear the input
@@ -75,11 +77,31 @@ export default function ProfilePictureUpload({
       }
 
       // Clear success message after 3 seconds
-      setTimeout(() => setSuccess(false), 3000);
+      setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to upload picture");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      setError(null);
+      setSuccessMessage(null);
+
+      await deleteProfilePicture(token);
+
+      setAvatarSrc(null);
+      setSuccessMessage("Profile picture deleted successfully!");
+      onUploadSuccess?.();
+
+      setTimeout(() => setSuccessMessage(null), 3000);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to delete picture");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -118,10 +140,18 @@ export default function ProfilePictureUpload({
 
           <button
             onClick={handleClick}
-            disabled={isLoading}
+            disabled={isLoading || isDeleting}
             className="px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-accent text-accent hover:bg-accent hover:text-white disabled:opacity-50 transition-colors duration-200 font-semibold"
           >
             {isLoading ? "Uploading..." : "Choose Picture"}
+          </button>
+
+          <button
+            onClick={handleDelete}
+            disabled={isLoading || isDeleting || !avatarSrc}
+            className="px-4 py-2 text-[10px] uppercase tracking-[0.2em] border border-border text-foreground hover:border-accent disabled:opacity-50 transition-colors duration-200 font-semibold"
+          >
+            {isDeleting ? "Deleting..." : "Delete Picture"}
           </button>
 
           {error && (
@@ -130,10 +160,10 @@ export default function ProfilePictureUpload({
             </div>
           )}
 
-          {success && (
+          {successMessage && (
             <div className="p-3 border border-border rounded">
               <p className="text-sm text-foreground">
-                ✓ Profile picture uploaded successfully!
+                ✓ {successMessage}
               </p>
             </div>
           )}

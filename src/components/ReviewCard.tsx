@@ -11,6 +11,7 @@ interface ReviewCardProps {
   token?: string;
   userName: string;
   userEmail?: string;
+  userProfileFields?: Array<{ key?: string; value?: string }>;
   userPicture?: string;
   rating: number;
   comment: string;
@@ -26,6 +27,7 @@ export default function ReviewCard({
   token,
   userName,
   userEmail,
+  userProfileFields,
   userPicture,
   rating,
   comment,
@@ -61,6 +63,7 @@ export default function ReviewCard({
         query: {
           name: userName,
           email: userEmail ?? "",
+          fields: JSON.stringify(userProfileFields ?? []),
         },
       }
     : null;

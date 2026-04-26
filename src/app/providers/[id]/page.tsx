@@ -319,9 +319,7 @@ export default function ProviderReviewsPage() {
                 token={session?.user?.token}
                 userName={
                   (
-                    (review.user as {
-                      profile?: { fields?: Array<{ key?: string; value?: string }> };
-                    } | undefined)?.profile?.fields?.find(
+                    review.user?.profile?.fields?.find(
                       (field) =>
                         field.key?.toLowerCase().replace(/[\s_-]/g, "") ===
                         "displayname"
@@ -332,6 +330,7 @@ export default function ProviderReviewsPage() {
                   ).trim()
                 }
                 userEmail={review.user?.email}
+                userProfileFields={review.user?.profile?.fields}
                 userPicture={
                   review.user?.picture ??
                   review.user?.profilePicture ??

@@ -28,6 +28,12 @@ export interface ReviewUser {
   picture?: string;
   profilePicture?: string;
   avatar?: string;
+  profile?: {
+    fields?: Array<{
+      key?: string;
+      value?: string;
+    }>;
+  };
 }
 
 export interface Review {
