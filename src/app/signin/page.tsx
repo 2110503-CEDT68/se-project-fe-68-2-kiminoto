@@ -63,6 +63,7 @@ function SignInContent() {
             variant="standard"
             type="email"
             label="Email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -76,6 +77,7 @@ function SignInContent() {
             variant="standard"
             type="password"
             label="Password"
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
