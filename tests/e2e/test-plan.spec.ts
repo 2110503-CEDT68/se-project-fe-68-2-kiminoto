@@ -16,6 +16,7 @@ test.beforeEach(async ({ page }) => {
 	await page.waitForURL(".");
 });
 
+// 2. Log out from the testing account
 test.afterEach(async ({ page }) => {
 	await page.goto("./signout");
 	await page.getByRole("button", { name: /Sign Out/i }).click();
@@ -41,7 +42,7 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 			await page.locator('a[href*="699edeced7f38d5e46173e7e"]').first().click();
 
 			// Expected Output: Reviews are visible.
-			await expect(page.getByText("CUSTOMER REVIEWS")).toBeVisible();
+			await expect(page.getByText(/CUSTOMER REVIEWS/i).first()).toBeVisible();
 			// Wait for reviews to load
 			await page.waitForSelector("text=Nina Gutkowski");
 		});
@@ -110,42 +111,5 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 
 			// Verify sorting visually or through DOM assertion
 		});
-
-		// ==========================================
-		// 3. Delete the account created
-		// ==========================================
-		// await test.step("Delete the dummy account", async () => {
-		// 	// Navigate to the profile page
-		// 	await page.goto("/profile");
-
-		// 	// Since there is no apparent "Delete Account" button in the Profile UI (from static analysis),
-		// 	// we'll attempt to click it if it exists.
-		// 	const deleteAccountBtn = page.getByRole("button", {
-		// 		name: /Delete Account/i,
-		// 	});
-
-		// 	if (await deleteAccountBtn.isVisible()) {
-		// 		await deleteAccountBtn.click();
-
-		// 		// Handle potential confirmation dialog
-		// 		const confirmBtn = page.getByRole("button", { name: /Confirm|Yes/i });
-		// 		if (await confirmBtn.isVisible()) {
-		// 			await confirmBtn.click();
-		// 		}
-		// 	} else {
-		// 		console.log(
-		// 			"Delete Account button not found in UI. Fallback: API deletion not performed because backend is unavailable.",
-		// 		);
-
-		// 		// If the backend was running and you had the route configured, you would do:
-		// 		/*
-		//     await request.delete('/api/v1/auth/delete', {
-		//       headers: {
-		//         'Authorization': `Bearer ${token}` // Fetch token from localStorage/cookies if needed
-		//       }
-		//     });
-		//     */
-		// 	}
-		// });
 	});
 });
