@@ -24,10 +24,7 @@ test.afterEach(async ({ page }) => {
 });
 
 test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
-	test("Signup, Follow Test Plan, and Delete Account", async ({
-		page,
-		request,
-	}) => {
+	test("Whole US1-* sequentially", async ({ page, request }) => {
 		// ==========================================
 		// 1. Follow the test plan from the PDF file
 		// ==========================================
@@ -61,21 +58,48 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 		await test.step("TC1-2-1 & TC1-2-2: Upvote a review & Prevent duplicate upvotes", async () => {
 			await page.goto("/providers/699edeced7f38d5e46173e7e"); // Navigate back to the provider with reviews
 
-			// Target the upvote button of the first review (using a generic selector that matches the up arrow)
-			// Playwright can target SVG paths or aria-labels if implemented
-			const firstReviewUpvoteBtn = page
-				.locator("button:has(svg)")
-				.filter({ hasText: /^\s*$/ })
-				.first();
-			// Note: adjust the selector above if you have a specific test-id like page.getByTestId('upvote-button')
+			const firstReviewUpvoteBtn = page.locator("button:has(svg)").first();
 
 			// TC1-2-1: Upvote a not-previously upvoted review
+
+			// get the score number
+			const beforeScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(beforeScore).not.toBeNull();
+			const beforeNumber = parseInt(beforeScore || "");
+			expect(beforeNumber).not.toBeNaN();
+
+			// click the upvote button
 			await firstReviewUpvoteBtn.click();
-			// Optionally verify that the upvote count increased (would require reading initial state)
+
+			// get the score number
+			const afterScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(afterScore).not.toBeNull();
+			const afterNumber = parseInt(afterScore || "");
+			expect(afterNumber).not.toBeNaN();
+
+			// Verify that the upvote count increased:
+			// check that the number has increased by 1
+			expect(afterNumber).toBe(beforeNumber + 1);
 
 			// TC1-2-2: Prevent duplicate upvotes on a previously upvoted review
 			await firstReviewUpvoteBtn.click();
-			// Output should be identical to expected output (no double counting)
+
+			// get the score number
+			const duplicateScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(duplicateScore).not.toBeNull();
+			const duplicateNumber = parseInt(duplicateScore || "");
+			expect(duplicateNumber).not.toBeNaN();
+
+			expect(duplicateNumber).toBe(afterNumber - 1);
 		});
 
 		// US1-3: Downvote Reviews for a Car Provider
