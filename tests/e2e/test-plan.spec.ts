@@ -99,19 +99,58 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 			const duplicateNumber = parseInt(duplicateScore || "");
 			expect(duplicateNumber).not.toBeNaN();
 
+			// Verify that the upvote count reverted:
+			// check that the number has decreased by 1
 			expect(duplicateNumber).toBe(afterNumber - 1);
 		});
 
 		// US1-3: Downvote Reviews for a Car Provider
 		await test.step("TC1-3-1 & TC1-3-2: Downvote a review & Prevent duplicate downvotes", async () => {
+			await page.goto("/providers/699edeced7f38d5e46173e7e"); // Navigate back to the provider with reviews
+
 			// Find the downvote button of the first review (assuming the second button in the voting group)
 			const firstReviewDownvoteBtn = page.locator("button:has(svg)").nth(1);
+
+			// get the score number
+			const beforeScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(beforeScore).not.toBeNull();
+			const beforeNumber = parseInt(beforeScore || "");
+			expect(beforeNumber).not.toBeNaN();
 
 			// TC1-3-1: Downvote a not-previously downvoted review
 			await firstReviewDownvoteBtn.click();
 
+			// get the score number
+			const afterScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(afterScore).not.toBeNull();
+			const afterNumber = parseInt(afterScore || "");
+			expect(afterNumber).not.toBeNaN();
+
+			// Verify that the upvote count decreased:
+			// check that the number has decreased by 1
+			expect(afterNumber).toBe(beforeNumber - 1);
+
 			// TC1-3-2: Prevent duplicate downvotes on a previously downvoted review
 			await firstReviewDownvoteBtn.click();
+
+			// get the score number
+			const duplicateScore = await page
+				.getByText(/^\-?[0-9]+$/i)
+				.first()
+				.textContent();
+			expect(duplicateScore).not.toBeNull();
+			const duplicateNumber = parseInt(duplicateScore || "");
+			expect(duplicateNumber).not.toBeNaN();
+
+			// Verify that the upvote count reverted:
+			// check that the number has increased by 1
+			expect(duplicateNumber).toBe(afterNumber + 1);
 		});
 
 		// US1-4: Sort Reviews for a Car Provider
@@ -122,8 +161,10 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 			});
 			await mostPopularBtn.click();
 
-			// Verify sorting visually or through DOM assertion (e.g. check if class indicates it is active)
-			// await expect(mostPopularBtn).toHaveClass(/active-class/);
+			// Verify sorting: Tung Tung Tung Sahur made the comment with the highest number of
+			// upvotes, he should be the first up the list.
+			const name = await page.locator(".username").first().textContent();
+			expect(name).toBe("Tung Tung Tung Sahur");
 		});
 
 		await test.step("TC1-4-2: Sort reviews for a car provider based on most recent", async () => {
@@ -133,7 +174,9 @@ test.describe("End-to-End Test for Kiminoto App Test Plan", () => {
 			});
 			await newestFirstBtn.click();
 
-			// Verify sorting visually or through DOM assertion
+			// Verify sorting: paopao made the newest comment, he should be the first up the list.
+			const name = await page.locator(".username").first().textContent();
+			expect(name).toBe("paopao");
 		});
 	});
 });
