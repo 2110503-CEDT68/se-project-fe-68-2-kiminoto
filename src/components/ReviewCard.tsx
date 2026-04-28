@@ -102,12 +102,12 @@ export default function ReviewCard({
             {profileHref ? (
               <Link
                 href={profileHref}
-                className="text-sm font-bold text-foreground tracking-tight hover:text-accent transition-colors"
+                className="text-sm font-bold text-foreground tracking-tight hover:text-accent transition-colors username"
               >
                 {userName}
               </Link>
             ) : (
-              <span className="text-sm font-bold text-foreground tracking-tight">
+              <span className="text-sm font-bold text-foreground tracking-tight username">
                 {userName}
               </span>
             )}
